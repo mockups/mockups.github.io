@@ -1,6 +1,6 @@
 'use strict';
 
-var MockupsApp = require('./MockupsApp');
+var MockupsApp = require('./App/App');
 var React = require('react');
 var Router = require('react-router');
 var Route = Router.Route;

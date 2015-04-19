@@ -9,7 +9,7 @@ describe('MockupsApp', function () {
     container.id = 'content';
     document.body.appendChild(container);
 
-    MockupsApp = require('components/MockupsApp.js');
+    MockupsApp = require('components/App.js');
     component = React.createElement(MockupsApp);
   });
 

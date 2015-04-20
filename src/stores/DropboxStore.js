@@ -1,6 +1,7 @@
 'use strict';
 
 import ActionTypes from '../constants/ActionTypes';
+import Paths from '../constants/Paths';
 
 var CHANGE_EVENT = 'change';
 
@@ -12,7 +13,7 @@ var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
 var Dropbox = require("dropbox");
 var client = new Dropbox.Client({ key: '3eb74begb9zwvbz' });
 client.authDriver(new Dropbox.AuthDriver.Popup({
-  receiverUrl: window.location.origin + '/oauth_receiver'
+  receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
 }));
 
 var DropboxStore = assign({}, EventEmitter.prototype, {
@@ -26,13 +27,21 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   },
 
   /**
-   * Gets page data by the given URL path.
-   *
-   * @param {String} path URL path.
-   * @returns {*} Page data.
+   * Start Dropbox authentication process
    */
   startAuthentication() {
-    client.authenticate(DropboxStore.emitChange);
+    if (!DropboxStore.isLogged()) {
+      client.authenticate(DropboxStore.emitChange);
+    }
+  },
+
+  /**
+   * Finish authenctication process and propogate login status
+   */
+  endAuthentication() {
+    console.log("endAuth");
+    Dropbox.AuthDriver.Popup.oauthReceiver();
+    console.log("endAuth");
   },
 
   /**
@@ -69,6 +78,10 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
 
     case ActionTypes.DROPBOX_LOGIN:
       DropboxStore.startAuthentication();
+      break;
+
+    case ActionTypes.DROPBOX_LOGIN_FINISH:
+      DropboxStore.endAuthentication();
       break;
 
     default:

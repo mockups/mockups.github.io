@@ -5,9 +5,16 @@ import ActionTypes from '../constants/ActionTypes';
 
 var DropboxActionCreators = {
 
-  login: function(data) {
+  initLogin: function(data) {
     Dispatcher.handleAction({
       type: ActionTypes.DROPBOX_LOGIN,
+      data: data
+    });
+  },
+
+  finishLogin: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.DROPBOX_LOGIN_FINISH,
       data: data
     });
   }

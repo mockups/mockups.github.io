@@ -25,6 +25,10 @@ module.exports = {
     reasons: false
   },
 
+  externals: {
+    dropbox: 'Dropbox'
+  },
+
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),

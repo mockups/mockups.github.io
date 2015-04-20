@@ -1,8 +1,19 @@
 'use strict';
 
+import ActionTypes from '../constants/ActionTypes';
+
+var CHANGE_EVENT = 'change';
+
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
+
+// Dropbox setup
+var Dropbox = require("dropbox");
+var client = new Dropbox.Client({ key: '3eb74begb9zwvbz' });
+client.authDriver(new Dropbox.AuthDriver.Popup({
+  receiverUrl: window.location.origin + '/oauth_receiver'
+}));
 
 var DropboxStore = assign({}, EventEmitter.prototype, {
   /**
@@ -21,9 +32,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @returns {*} Page data.
    */
   startAuthentication() {
-    client.authDriver(new Dropbox.AuthDriver.Popup({
-      receiverUrl: window.location.origin + '/oauth_receiver'
-    }));
+    client.authenticate(DropboxStore.emitChange);
   },
 
   /**
@@ -40,7 +49,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    *
    * @param {function} callback Callback function.
    */
-  onChange(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
@@ -49,26 +58,25 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    *
    * @param {function} callback Callback function.
    */
-  off(callback) {
-    this.off(CHANGE_EVENT, callback);
+  removeChangeListener(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
   }
 });
 
 DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
   var action = payload.action;
-
   switch (action.type) {
 
     case ActionTypes.DROPBOX_LOGIN:
-      logging = true;
       DropboxStore.startAuthentication();
-      DropboxStore.emitChange();
       break;
 
     default:
       // Do nothing
 
   }
+
+  return true;
 
 });
 

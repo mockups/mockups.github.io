@@ -1,12 +1,16 @@
 'use strict';
 
-import DropboxActions from '../../actions/DropboxActions';
+import DropboxActions from '../../actions/DropboxActionCreators';
 
 var React = require('react/addons');
 
-require('DropboxLogin.scss');
+require('./DropboxLogin.scss');
 
 var DropboxLogin = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   loginToDropbox() {
     DropboxActions.login();
   },
@@ -22,4 +26,3 @@ var DropboxLogin = React.createClass({
 });
 
 module.exports = DropboxLogin; 
-

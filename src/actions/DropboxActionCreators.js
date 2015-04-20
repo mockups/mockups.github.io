@@ -1,12 +1,12 @@
 'use strict';
 
-import Dispatcher from '../core/Dispatcher';
-import ActionTypes from '../constants/ActionConstants';
+import Dispatcher from '../dispatcher/MockupsAppDispatcher';
+import ActionTypes from '../constants/ActionTypes';
 
 var DropboxActionCreators = {
 
   login: function(data) {
-    Dispatcher.handleViewAction({
+    Dispatcher.handleAction({
       type: ActionTypes.DROPBOX_LOGIN,
       data: data
     });

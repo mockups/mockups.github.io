@@ -58,7 +58,9 @@ module.exports = {
       loader: 'url-loader?limit=8192'
     }]
   },
-
+  externals: {
+    dropbox: 'Dropbox'
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()

@@ -18,8 +18,12 @@ var DropboxLogin = React.createClass({
   render() {
     return (
       <div className="DropboxLogin">
-        <button type="button" onClick={this.loginToDropbox}>Login with Dropbox
-        </button>
+          {
+            this.props.logged ?
+            <div>Logged</div> :
+            <button type="button" onClick={this.loginToDropbox}>Login with Dropbox
+            </button>
+          }
       </div>
     );
   }

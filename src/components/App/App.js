@@ -1,5 +1,7 @@
 'use strict';
 
+import DropboxActions from '../../actions/DropboxActionCreators';
+
 var React = require('react/addons');
 var ReactTransitionGroup = React.addons.TransitionGroup;
 var Router = require('react-router');
@@ -12,7 +14,7 @@ var imageURL = require('../../images/yeoman.png');
 // Method to retrieve state from Stores
 function getAppState() {
   return {
-    userLogged: DropboxStore.isLogged()
+    logged: DropboxStore.isLogged()
   };
 }
 
@@ -25,6 +27,10 @@ var MockupsApp = React.createClass({
   // Add change listeners to stores
   componentDidMount: function() {
     DropboxStore.addChangeListener(this._onChange);
+    // Check if user is already logged into Dropbox
+    DropboxActions.initLogin({
+      interactive: false
+    });
   },
 
   // Remove change listers from stores
@@ -41,7 +47,7 @@ var MockupsApp = React.createClass({
     return (
       <main>
         <ReactTransitionGroup transitionName="fade">
-          <RouteHandler/>
+          <RouteHandler logged={this.state.logged} />
         </ReactTransitionGroup>
       </main>
     );

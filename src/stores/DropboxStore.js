@@ -28,20 +28,23 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
   /**
    * Start Dropbox authentication process
+   * @param params.quiet True if authorization should proceed in non-interactive way
    */
-  startAuthentication() {
-    if (!DropboxStore.isLogged()) {
-      client.authenticate(DropboxStore.emitChange);
+  startAuthentication(params) {
+    if (typeof params === undefined) {
+      params = {
+        interactive: true
+      };
     }
+    client.authenticate(params, DropboxStore.emitChange);
   },
 
   /**
    * Finish authenctication process and propogate login status
    */
   endAuthentication() {
-    console.log("endAuth");
     Dropbox.AuthDriver.Popup.oauthReceiver();
-    console.log("endAuth");
+    DropboxStore.emitChange();
   },
 
   /**
@@ -50,7 +53,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @returns {Boolean} Indication if we've emitted an event.
    */
   emitChange() {
-    return this.emit(CHANGE_EVENT);
+    return DropboxStore.emit(CHANGE_EVENT);
   },
 
   /**
@@ -59,7 +62,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @param {function} callback Callback function.
    */
   addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback);
+    DropboxStore.on(CHANGE_EVENT, callback);
   },
 
   /**
@@ -68,7 +71,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @param {function} callback Callback function.
    */
   removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+    DropboxStore.removeListener(CHANGE_EVENT, callback);
   }
 });
 
@@ -88,8 +91,6 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
       // Do nothing
 
   }
-
-  return true;
 
 });
 

@@ -7,12 +7,12 @@ var React = require('react/addons');
 require('./DropboxLogin.scss');
 
 var DropboxLogin = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
   loginToDropbox() {
     DropboxActions.initLogin();
+  },
+
+  logoutFromDropbox() {
+    DropboxActions.logout();
   },
 
   render() {
@@ -20,7 +20,8 @@ var DropboxLogin = React.createClass({
       <div className="DropboxLogin">
           {
             this.props.logged ?
-            <div>Logged</div> :
+            <button type="button" onClick={this.logoutFromDropbox}>Logout from Dropbox
+            </button> :
             <button type="button" onClick={this.loginToDropbox}>Login with Dropbox
             </button>
           }

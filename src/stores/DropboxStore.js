@@ -11,7 +11,7 @@ var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
 
 // Dropbox setup
 var Dropbox = require("dropbox");
-var client = new Dropbox.Client({ key: '3eb74begb9zwvbz' });
+var client = new Dropbox.Client({ key: 'ypy9ft10j7n0nii' });
 client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
 }));
@@ -44,7 +44,13 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    */
   endAuthentication() {
     Dropbox.AuthDriver.Popup.oauthReceiver();
-    DropboxStore.emitChange();
+  },
+
+  /**
+   * Logout user from Dropbox
+   */
+  logout() {
+    client.signOut(DropboxStore.emitChange);
   },
 
   /**
@@ -80,11 +86,15 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
   switch (action.type) {
 
     case ActionTypes.DROPBOX_LOGIN:
-      DropboxStore.startAuthentication();
+      DropboxStore.startAuthentication(action.data);
       break;
 
     case ActionTypes.DROPBOX_LOGIN_FINISH:
       DropboxStore.endAuthentication();
+      break;
+
+    case ActionTypes.DROPBOX_LOGOUT:
+      DropboxStore.logout();
       break;
 
     default:

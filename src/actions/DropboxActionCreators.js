@@ -17,6 +17,13 @@ var DropboxActionCreators = {
       type: ActionTypes.DROPBOX_LOGIN_FINISH,
       data: data
     });
+  },
+
+  logout: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.DROPBOX_LOGOUT,
+      data: data
+    });
   }
 
 };

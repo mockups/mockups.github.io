@@ -21,7 +21,7 @@ var OauthReciever = require('./OauthReciever/OauthReciever');
 var InitialSetup = require('./InitialSetup/InitialSetup');
 
 var Routes = (
-  <Route handler={MockupsApp} path="/">
+  <Route handler={MockupsApp}>
     <Route name="dropbox-auth" path={Paths.LOGIN} handler={DropboxLogin} />
     <Route name="oauth-reciever" path={Paths.OAUTH_RECIEVER} handler={OauthReciever} />
     <Route name="initial-setup" path={Paths.INITIAL_SETUP} handler={InitialSetup} />

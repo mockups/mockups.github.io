@@ -7,6 +7,7 @@ var React = require('react/addons');
 var ReactTransitionGroup = React.addons.TransitionGroup;
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var Link = Router.Link;
 
 var DropboxStore = require('../../stores/DropboxStore');
 
@@ -29,6 +30,10 @@ var requireAuthMixin = {
 };
 
 var MockupsApp = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   // Get initial state from stores
   getInitialState: function() {
     return getAppState();
@@ -53,11 +58,14 @@ var MockupsApp = React.createClass({
     this.setState(getAppState());
   },
 
-  logoutFromDropbox: function() {
+  logoutFromDropbox: function(e) {
+
     DropboxActions.logout();
   },
 
   render: function() {
+    var { router } = this.context;
+
     return (
       <div className="App">
         <nav>
@@ -65,10 +73,10 @@ var MockupsApp = React.createClass({
             {
               this.state.logged ?
               <li>
-                <a href="" onClick={this.logoutFromDropbox}>Logout</a>
+                <a href="#" onClick={this.logoutFromDropbox}>Logout</a>
               </li> :
               <li>
-                <a href={Paths.LOGIN}>Login</a>
+                <Link to="dropbox-auth">Login</Link>
               </li>
             }
           </ul>

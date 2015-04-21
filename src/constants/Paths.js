@@ -2,5 +2,7 @@
 
 // Define action constants
 module.exports = {
-  OAUTH_RECIEVER: "oauth-reciever"	// Initiates login to Dropbox
+  LOGIN: "dropbox-auth",            // Initiates login to Dropbox
+  OAUTH_RECIEVER: "oauth-reciever",	// User is being redirected after authentication
+  INITIAL_SETUP: "initial-setup"    // Set initial user preferences
 };

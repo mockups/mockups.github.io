@@ -1,6 +1,7 @@
 'use strict';
 
 import DropboxActions from '../../actions/DropboxActionCreators';
+import Paths from '../../constants/Paths';
 
 var React = require('react/addons');
 var ReactTransitionGroup = React.addons.TransitionGroup;
@@ -11,12 +12,21 @@ var DropboxStore = require('../../stores/DropboxStore');
 
 var imageURL = require('../../images/yeoman.png');
 
-// Method to retrieve state from Stores
+// Retrieve state from Stores
 function getAppState() {
   return {
     logged: DropboxStore.isLogged()
   };
 }
+
+// Redirect user to login view if he is not logged in
+var requireAuthMixin = {
+  willTransitionTo: function (transition) {
+    if (!DropboxStore.isLogged()) {
+      transition.redirect(Paths.LOGIN, {}, {'nextPath' : transition.path});
+    }
+  }
+};
 
 var MockupsApp = React.createClass({
   // Get initial state from stores
@@ -43,13 +53,32 @@ var MockupsApp = React.createClass({
     this.setState(getAppState());
   },
 
+  logoutFromDropbox: function() {
+    DropboxActions.logout();
+  },
+
   render: function() {
     return (
-      <main>
-        <ReactTransitionGroup transitionName="fade">
-          <RouteHandler logged={this.state.logged} />
-        </ReactTransitionGroup>
-      </main>
+      <div className="App">
+        <nav>
+          <ul>
+            {
+              this.state.logged ?
+              <li>
+                <a href="" onClick={this.logoutFromDropbox}>Logout</a>
+              </li> :
+              <li>
+                <a href={Paths.LOGIN}>Login</a>
+              </li>
+            }
+          </ul>
+        </nav>
+        <main>
+          <ReactTransitionGroup transitionName="fade">
+            <RouteHandler logged={this.state.logged} />
+          </ReactTransitionGroup>
+        </main>
+      </div>
     );
   }
 });

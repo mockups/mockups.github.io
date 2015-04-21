@@ -18,15 +18,17 @@ require('../styles/common.scss');
 var MockupsApp = require('./App/App');
 var DropboxLogin = require('./DropboxLogin/DropboxLogin');
 var OauthReciever = require('./OauthReciever/OauthReciever');
+var InitialSetup = require('./InitialSetup/InitialSetup');
 
 var Routes = (
-  <Route handler={MockupsApp}>
-    <Route name="dropbox-auth" path="dropbox-auth" handler={DropboxLogin} />
+  <Route handler={MockupsApp} path="/">
+    <Route name="dropbox-auth" path={Paths.LOGIN} handler={DropboxLogin} />
     <Route name="oauth-reciever" path={Paths.OAUTH_RECIEVER} handler={OauthReciever} />
+    <Route name="initial-setup" path={Paths.INITIAL_SETUP} handler={InitialSetup} />
     <NotFoundRoute handler={MockupsApp} />
   </Route>
 );
 
 Router.run(Routes, Router.HistoryLocation, function (Handler) {
-  React.render(<Handler/>, document.body);
+  React.render(<Handler/>, document.getElementById("content"));
 });

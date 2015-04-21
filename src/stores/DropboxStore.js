@@ -11,38 +11,131 @@ var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
 
 // Dropbox setup
 var Dropbox = require("dropbox");
-var client = new Dropbox.Client({ key: 'ypy9ft10j7n0nii' });
+var client = new Dropbox.Client({ key: '3eb74begb9zwvbz' });
 client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
 }));
+
+// Datatables
+var datastore = null;
+var tables = {};
 
 var DropboxStore = assign({}, EventEmitter.prototype, {
   /**
    * Checks if client is logged into Dropbox
    *
-   * @returns {Boolean} True if is logged, false otherwise.
+   * @returns {Boolean} True if is logged, false otherwise
    */
   isLogged() {
-    return client.isAuthenticated();
+    return client.isAuthenticated() && datastore;
+  },
+
+  /**
+   * Returns root folder to store files
+   *
+   * @returns {Boolean} True if root file folder is set, false otherwise
+   */
+  getRootFolder() {
+    if (!DropboxStore.isLogged()) {
+      return;
+    }
+
+    var rootFolder = DropboxStore.get({
+      table: "settings",
+      query: {
+        "key": "rootFolder"
+      }
+    });
+
+    return rootFolder ? rootFolder.value : false;
   },
 
   /**
    * Start Dropbox authentication process
-   * @param params.quiet True if authorization should proceed in non-interactive way
+   * @param params {Object} Authentication parameters for Dropbox client
+   * @param params.quiet {Boolean}  True if authorization should proceed in non-interactive way
    */
-  startAuthentication(params) {
+  authenticate(params) {
     if (typeof params === undefined) {
       params = {
         interactive: true
       };
     }
-    client.authenticate(params, DropboxStore.emitChange);
+
+    client.authenticate(params, function(error, data) {
+      if (client.isAuthenticated()) {
+        DropboxStore.openDatastore();
+      }
+    });
   },
 
   /**
-   * Finish authenctication process and propogate login status
+   * Writes data to specified table
+   * @param params {Object} Parameters for write
+   * @param params.table {string} Table to write to
+   * @param params.query {Object} Set of conditions that records must match to be changed
+   * @param params.data {Object} Record data
+   * @returns {(Object|Object[])} record or set of records that has been changed
    */
-  endAuthentication() {
+  set(params) {
+    var targets = DropboxStore.get(params);
+
+    if (!targets) {
+      targets = tables[params.table].insert(params.data);
+    } else if (!targets.length) {
+      targets.update(params.data);
+    } else {
+      targets = targets.map(function(record) {
+        return record.update(params.data);
+      });
+    }
+
+    return targets;
+  },
+
+  /**
+   * Get record(s) from specified table
+   * @param params {Object} Parameters for search
+   * @param params.table {string} Table to read from
+   * @param params.query {Object} Set of conditions that records must match to be returned
+   * @returns {(Object|Object[])} record or set of records that mathes query
+   */
+  get(params) {
+    var results = tables[params.table].query(params.query);
+
+    if (!results.length) {
+      return;
+    } else if (results.length === 1) {
+      return results[0];
+    }
+
+    return results;
+  },
+
+  /**
+   * Remove record from specified table
+   * @param params {Object} Parameters for delete
+   * @param params.table {string} Table to read from
+   * @param params.key {string} Key to find a record
+   */
+  delete(params) {
+    var targets = DropboxStore.get(params);
+
+    if (!targets) {
+      return;
+    } else if (!targets.length) {
+      targets.deleteRecord();
+    } else {
+      targets.map(function(record) {
+        return record.deleteRecord();
+      });
+    }
+  },
+
+  /**
+   * Finish authenctication process
+   */
+  closeAuthenticationModal() {
     Dropbox.AuthDriver.Popup.oauthReceiver();
   },
 
@@ -50,7 +143,29 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * Logout user from Dropbox
    */
   logout() {
+    if (datastore) {
+      datastore.close();
+    }
+
     client.signOut(DropboxStore.emitChange);
+  },
+
+  /**
+   * Opens the Dropbox default datastore for an application
+   */
+  openDatastore() {
+    var datastoreManager = client.getDatastoreManager();
+
+    datastoreManager.openDefaultDatastore(function (error, defaultDatastore) {
+        if (error) {
+            console.log('Error opening default datastore: ' + error);
+            return;
+        }
+
+        datastore = defaultDatastore;
+        tables['settings'] = datastore.getTable('settings');
+        DropboxStore.emitChange();
+    });
   },
 
   /**
@@ -86,11 +201,11 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
   switch (action.type) {
 
     case ActionTypes.DROPBOX_LOGIN:
-      DropboxStore.startAuthentication(action.data);
+      DropboxStore.authenticate(action.data);
       break;
 
     case ActionTypes.DROPBOX_LOGIN_FINISH:
-      DropboxStore.endAuthentication();
+      DropboxStore.closeAuthenticationModal();
       break;
 
     case ActionTypes.DROPBOX_LOGOUT:

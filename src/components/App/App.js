@@ -15,7 +15,8 @@ var imageURL = require('../../images/yeoman.png');
 function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
-    rootFolder: DropboxStore.getRootFolder()
+    files: DropboxStore.files,
+    busy: DropboxStore.busy
   };
 }
 

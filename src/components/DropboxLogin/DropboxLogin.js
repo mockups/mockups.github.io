@@ -21,8 +21,6 @@ var DropboxLogin = React.createClass({
 
     if (nextPath) {
       router.replaceWith(nextPath);
-    } else if (!this.props.rootFolder) {
-      router.replaceWith("initial-setup");
     } else {
       router.replaceWith("/");
     }

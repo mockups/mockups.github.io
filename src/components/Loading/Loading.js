@@ -11,7 +11,6 @@ var Loading = React.createClass({
       </div>
     );
   }
-
 });
 
 module.exports = Loading;

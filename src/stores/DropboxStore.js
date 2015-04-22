@@ -11,11 +11,12 @@ var CHANGE_EVENT = 'change';
 
 // Dropbox setup
 var Dropbox = require("dropbox");
-var client = new Dropbox.Client({ key: '3eb74begb9zwvbz' });
+var client = new Dropbox.Client({ key: 'c3yzhain4om1l95' });
 client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
 }));
 var triedToLogin = false;
+var busy = false;
 
 // Datatables
 var datastore = null;
@@ -32,46 +33,13 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
       return undefined;
     }
 
-    return client.isAuthenticated() && datastore !== null;
+    return client.isAuthenticated();
   },
 
-  /**
-   * Returns root folder to store files
-   *
-   * @returns {Boolean} True if root file folder is set, false otherwise
-   */
-  getRootFolder() {
-    if (!DropboxStore.isLogged()) {
-      return;
-    }
 
-    var record = DropboxStore.find({
-      table: "settings",
-      query: {
-        "key": "rootFolder"
-      }
-    });
+  busy: false,
 
-    if (record) {
-      var path = record.get("value");
-
-      // If root folder does not actually exist – remove it
-      this.checkfolderExists(path, (error, stat) => {
-        if (error) {
-          this.delete({
-            table: "settings",
-            query: {
-              "key": "rootFolder"
-            }
-          });
-
-          this.emitChange();
-        }
-      });
-
-      return path;
-    }
-  },
+  files: null,
 
   /**
    * Checks if folder with provided path already exists
@@ -79,8 +47,27 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @param cb {Function} callback function
    * @returns {Boolean} true if folder can be created
    */ 
-  checkfolderExists(path, cb) {
+  checkFolderExists(path, cb) {
     client.stat(path, cb);
+  },
+
+  /**
+   * Get list of all files
+   * @returns 
+   */
+  getFiles() {
+    if (!client.isAuthenticated()) {
+      return;
+    }
+
+    client.readdir("/", (error, contents, folder, entries) => {
+      console.log(error);
+      console.log(contents);
+      console.log(folder);
+      console.log(entries);
+      this.files = true;
+      this.emitChange();
+    });
   },
 
   /**
@@ -100,6 +87,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
       if (client.isAuthenticated()) {
         this.openDatastore();
+        this.getFiles();
       } else {
         this.emitChange();
       }
@@ -196,7 +184,6 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
         }
 
         datastore = defaultDatastore;
-        tables['settings'] = datastore.getTable('settings');
         DropboxStore.emitChange();
     });
   },
@@ -246,11 +233,7 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.DROPBOX_CHECK_FOLDER_EXISTS:
-      DropboxStore.checkfolderExists(action.data.path, action.data.cb);
-      break;
-
-    case ActionTypes.DROPBOX_CREATE_ROOT_FOLDER:
-      DropboxStore.createRootFolder(action.data.path, action.data.cb);
+      DropboxStore.checkFolderExists(action.data.path, action.data.cb);
       break;
 
     default:

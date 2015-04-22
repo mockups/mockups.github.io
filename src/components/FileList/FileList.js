@@ -1,15 +1,12 @@
 'use strict';
 
 import DropboxActions from '../../actions/DropboxActionCreators';
+import App from '../App/App';
 
 var React = require('react/addons');
 
-require('./DropboxLogin.scss');
-
 var DropboxLogin = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
+  mixins: [App.requireAuthMixin],
 
   loginToDropbox() {
     DropboxActions.initLogin();

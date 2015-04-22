@@ -8,6 +8,7 @@ var CHANGE_EVENT = 'change';
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
+var triedToLogin = false;
 
 // Dropbox setup
 var Dropbox = require("dropbox");
@@ -27,7 +28,11 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @returns {Boolean} True if is logged, false otherwise
    */
   isLogged() {
-    return client.isAuthenticated() && datastore;
+    if (!triedToLogin) {
+      return undefined;
+    }
+
+    return client.isAuthenticated() && datastore !== null;
   },
 
   /**
@@ -40,14 +45,16 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
       return;
     }
 
-    var rootFolder = DropboxStore.get({
+    var record = DropboxStore.find({
       table: "settings",
       query: {
         "key": "rootFolder"
       }
     });
 
-    return rootFolder ? rootFolder.value : false;
+    if (record) {
+      return record.get("value");
+    }
   },
 
   /**
@@ -63,8 +70,12 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     }
 
     client.authenticate(params, function(error, data) {
+      triedToLogin = true;
+
       if (client.isAuthenticated()) {
         DropboxStore.openDatastore();
+      } else {
+        DropboxStore.emitChange();
       }
     });
   },
@@ -94,13 +105,13 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   },
 
   /**
-   * Get record(s) from specified table
+   * Find record(s) from specified table
    * @param params {Object} Parameters for search
    * @param params.table {string} Table to read from
    * @param params.query {Object} Set of conditions that records must match to be returned
    * @returns {(Object|Object[])} record or set of records that mathes query
    */
-  get(params) {
+  find(params) {
     var results = tables[params.table].query(params.query);
 
     if (!results.length) {
@@ -119,7 +130,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @param params.key {string} Key to find a record
    */
   delete(params) {
-    var targets = DropboxStore.get(params);
+    var targets = DropboxStore.find(params);
 
     if (!targets) {
       return;
@@ -143,10 +154,6 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * Logout user from Dropbox
    */
   logout() {
-    if (datastore) {
-      datastore.close();
-    }
-
     client.signOut(DropboxStore.emitChange);
   },
 

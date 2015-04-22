@@ -16,18 +16,10 @@ var imageURL = require('../../images/yeoman.png');
 // Retrieve state from Stores
 function getAppState() {
   return {
-    logged: DropboxStore.isLogged()
+    logged: DropboxStore.isLogged(),
+    rootFolder: DropboxStore.getRootFolder()
   };
 }
-
-// Redirect user to login view if he is not logged in
-var requireAuthMixin = {
-  willTransitionTo: function (transition) {
-    if (!DropboxStore.isLogged()) {
-      transition.redirect(Paths.LOGIN, {}, {'nextPath' : transition.path});
-    }
-  }
-};
 
 var MockupsApp = React.createClass({
   contextTypes: {
@@ -55,11 +47,14 @@ var MockupsApp = React.createClass({
 
   // Method to setState based upon Store changes
   _onChange: function() {
+    if (!this.state.logged === false) {
+      this.context.router.replaceWith("dropbox-auth");
+    }
+
     this.setState(getAppState());
   },
 
   logoutFromDropbox: function(e) {
-
     DropboxActions.logout();
   },
 
@@ -83,12 +78,24 @@ var MockupsApp = React.createClass({
         </nav>
         <main>
           <ReactTransitionGroup transitionName="fade">
-            <RouteHandler logged={this.state.logged} />
+            <RouteHandler logged={this.state.logged} rootFolder={this.state.rootFolder} />
           </ReactTransitionGroup>
         </main>
       </div>
     );
   }
 });
+
+// Redirect user to login view if he is not logged in
+MockupsApp.requireAuthMixin = {
+  statics: {
+    willTransitionTo: function (transition) {
+      console.log("wTT");
+      if (!DropboxStore.isLogged()) {
+        transition.redirect(Paths.LOGIN, {}, {'nextPath' : transition.path});
+      }
+    }
+  }
+};
 
 module.exports = MockupsApp;

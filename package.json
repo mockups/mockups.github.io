@@ -10,7 +10,6 @@
   "mainInput": "main",
   "mainOutput": "main",
   "dependencies": {
-    "react-router": "^0.13.1",
     "flux": "^2.0.1",
     "events": "^1.0.2",
     "object-assign": "^2.0.0",
@@ -42,6 +41,7 @@
     "load-grunt-tasks": "~0.6.0",
     "node-sass": "^2.1.1",
     "react-hot-loader": "^1.0.7",
+    "react-router": "^0.13.2",
     "sass-loader": "^0.4.2",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",

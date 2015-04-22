@@ -1,7 +1,7 @@
 'use strict';
 
-import Dispatcher from '../dispatcher/MockupsAppDispatcher';
-import ActionTypes from '../constants/ActionTypes';
+var Dispatcher = require('../dispatcher/MockupsAppDispatcher');
+var ActionTypes = require('../constants/ActionTypes');
 
 var DropboxActionCreators = {
 
@@ -24,8 +24,22 @@ var DropboxActionCreators = {
       type: ActionTypes.DROPBOX_LOGOUT,
       data: data
     });
+  },
+
+  checkFolderExist: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.DROPBOX_CHECK_FOLDER_EXISTS,
+      data: data
+    });
+  },
+
+  createRootFolder: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.DROPBOX_CREATE_ROOT_FOLDER,
+      data: data
+    });
   }
 
 };
 
-module.exports = DropboxActionCreators; 
+module.exports = DropboxActionCreators;

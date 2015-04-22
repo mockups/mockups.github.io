@@ -1,8 +1,5 @@
 'use strict';
 
-import DropboxActions from '../../actions/DropboxActionCreators';
-import Paths from '../../constants/Paths';
-
 var React = require('react/addons');
 var ReactTransitionGroup = React.addons.TransitionGroup;
 var Router = require('react-router');
@@ -10,7 +7,8 @@ var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
 var DropboxStore = require('../../stores/DropboxStore');
-
+var DropboxActions = require('../../actions/DropboxActionCreators');
+var Paths = require('../../constants/Paths');
 var imageURL = require('../../images/yeoman.png');
 
 // Retrieve state from Stores
@@ -27,12 +25,12 @@ var MockupsApp = React.createClass({
   },
 
   // Get initial state from stores
-  getInitialState: function() {
+  getInitialState() {
     return getAppState();
   },
 
   // Add change listeners to stores
-  componentDidMount: function() {
+  componentDidMount() {
     DropboxStore.addChangeListener(this._onChange);
     // Check if user is already logged into Dropbox
     DropboxActions.initLogin({
@@ -41,12 +39,12 @@ var MockupsApp = React.createClass({
   },
 
   // Remove change listers from stores
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     DropboxStore.removeChangeListener(this._onChange);
   },
 
   // Method to setState based upon Store changes
-  _onChange: function() {
+  _onChange() {
     if (!this.state.logged === false) {
       this.context.router.replaceWith("dropbox-auth");
     }
@@ -54,11 +52,12 @@ var MockupsApp = React.createClass({
     this.setState(getAppState());
   },
 
-  logoutFromDropbox: function(e) {
+  logoutFromDropbox(e) {
+    e.preventDefault();
     DropboxActions.logout();
   },
 
-  render: function() {
+  render() {
     var { router } = this.context;
 
     return (
@@ -78,7 +77,7 @@ var MockupsApp = React.createClass({
         </nav>
         <main>
           <ReactTransitionGroup transitionName="fade">
-            <RouteHandler logged={this.state.logged} rootFolder={this.state.rootFolder} />
+            <RouteHandler {...this.state} />
           </ReactTransitionGroup>
         </main>
       </div>
@@ -90,7 +89,6 @@ var MockupsApp = React.createClass({
 MockupsApp.requireAuthMixin = {
   statics: {
     willTransitionTo: function (transition) {
-      console.log("wTT");
       if (!DropboxStore.isLogged()) {
         transition.redirect(Paths.LOGIN, {}, {'nextPath' : transition.path});
       }

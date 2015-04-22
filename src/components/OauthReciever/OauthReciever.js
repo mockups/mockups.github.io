@@ -1,12 +1,12 @@
 'use strict';
 
-import DropboxActions from '../../actions/DropboxActionCreators';
-
 var React = require('react/addons');
+
+var DropboxActions = require('../../actions/DropboxActionCreators');
 
 var OauthReciever = React.createClass({
   // Add change listeners to stores
-  componentDidMount: function() {
+  componentDidMount() {
     DropboxActions.finishLogin();
   },
 

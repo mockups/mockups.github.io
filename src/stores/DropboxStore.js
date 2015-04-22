@@ -1,14 +1,13 @@
 'use strict';
 
-import ActionTypes from '../constants/ActionTypes';
-import Paths from '../constants/Paths';
-
-var CHANGE_EVENT = 'change';
-
 var EventEmitter = require('events').EventEmitter;
+
+var ActionTypes = require('../constants/ActionTypes');
+var Paths = require('../constants/Paths');
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
-var triedToLogin = false;
+
+var CHANGE_EVENT = 'change';
 
 // Dropbox setup
 var Dropbox = require("dropbox");
@@ -16,6 +15,7 @@ var client = new Dropbox.Client({ key: '3eb74begb9zwvbz' });
 client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
 }));
+var triedToLogin = false;
 
 // Datatables
 var datastore = null;
@@ -53,8 +53,34 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     });
 
     if (record) {
-      return record.get("value");
+      var path = record.get("value");
+
+      // If root folder does not actually exist – remove it
+      this.checkfolderExists(path, (error, stat) => {
+        if (error) {
+          this.delete({
+            table: "settings",
+            query: {
+              "key": "rootFolder"
+            }
+          });
+
+          this.emitChange();
+        }
+      });
+
+      return path;
     }
+  },
+
+  /**
+   * Checks if folder with provided path already exists
+   * @param path {string} the path to the file or folder whose metadata will be read, relative to the user's Dropbox or to the application's folder
+   * @param cb {Function} callback function
+   * @returns {Boolean} true if folder can be created
+   */ 
+  checkfolderExists(path, cb) {
+    client.stat(path, cb);
   },
 
   /**
@@ -69,13 +95,13 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
       };
     }
 
-    client.authenticate(params, function(error, data) {
+    client.authenticate(params, (error, data) => {
       triedToLogin = true;
 
       if (client.isAuthenticated()) {
-        DropboxStore.openDatastore();
+        this.openDatastore();
       } else {
-        DropboxStore.emitChange();
+        this.emitChange();
       }
     });
   },
@@ -217,6 +243,14 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
 
     case ActionTypes.DROPBOX_LOGOUT:
       DropboxStore.logout();
+      break;
+
+    case ActionTypes.DROPBOX_CHECK_FOLDER_EXISTS:
+      DropboxStore.checkfolderExists(action.data.path, action.data.cb);
+      break;
+
+    case ActionTypes.DROPBOX_CREATE_ROOT_FOLDER:
+      DropboxStore.createRootFolder(action.data.path, action.data.cb);
       break;
 
     default:

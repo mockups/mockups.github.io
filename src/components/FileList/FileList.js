@@ -1,9 +1,9 @@
 'use strict';
 
-import DropboxActions from '../../actions/DropboxActionCreators';
-import App from '../App/App';
-
 var React = require('react/addons');
+
+var DropboxActions = require('../../actions/DropboxActionCreators');
+var App = require('../App/App');
 
 var DropboxLogin = React.createClass({
   mixins: [App.requireAuthMixin],

@@ -1,10 +1,9 @@
 'use strict';
 
-import DropboxActions from '../../actions/DropboxActionCreators';
-import Loading from '../Loading/Loading';
-
 var React = require('react/addons');
 
+var DropboxActions = require('../../actions/DropboxActionCreators');
+var Loading = require('../Loading/Loading');
 require('./DropboxLogin.scss');
 
 var DropboxLogin = React.createClass({
@@ -12,11 +11,11 @@ var DropboxLogin = React.createClass({
     router: React.PropTypes.func
   },
 
-  loginToDropbox: function() {
+  loginToDropbox() {
     DropboxActions.initLogin();
   },
 
-  proceed: function() {
+  proceed() {
     var router = this.context.router;
     var nextPath = router.getCurrentQuery().nextPath;
 
@@ -29,7 +28,7 @@ var DropboxLogin = React.createClass({
     }
   },
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     if (!this.props.logged) {
       return;
     }
@@ -37,7 +36,7 @@ var DropboxLogin = React.createClass({
     this.proceed();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     if (this.props.logged) {
       this.proceed();
     }

@@ -8,6 +8,8 @@ var Link = Router.Link;
 
 var DropboxStore = require('../../stores/DropboxStore');
 var DropboxActions = require('../../actions/DropboxActionCreators');
+var MockupStore = require('../../stores/MockupStore');
+var MockupActions = require('../../actions/MockupActionCreators');
 var Paths = require('../../constants/Paths');
 var imageURL = require('../../images/yeoman.png');
 
@@ -15,7 +17,7 @@ var imageURL = require('../../images/yeoman.png');
 function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
-    mockups: DropboxStore.mockups,
+    mockups: MockupStore.mockups,
     files: DropboxStore.files,
     busy: DropboxStore.busy
   };

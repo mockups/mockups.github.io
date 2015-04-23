@@ -20,6 +20,7 @@ var Loading = require('./Loading/Loading');
 var DropboxLogin = require('./DropboxLogin/DropboxLogin');
 var OauthReciever = require('./OauthReciever/OauthReciever');
 var InitialSetup = require('./InitialSetup/InitialSetup');
+var MockupList = require('./MockupList/MockupList');
 var FileList = require('./FileList/FileList');
 
 var Routes = (
@@ -27,6 +28,7 @@ var Routes = (
     <Route name="dropbox-auth" path={Paths.LOGIN} handler={DropboxLogin} />
     <Route name="oauth-reciever" path={Paths.OAUTH_RECIEVER} handler={OauthReciever} />
     <Route name="initial-setup" path={Paths.INITIAL_SETUP} handler={InitialSetup}  />
+    <Route name="mockup-list" path={Paths.MOCKUP_LIST} handler={MockupList} />
     <Route name="file-list" path={Paths.FILE_LIST} handler={FileList} />
     <NotFoundRoute handler={DropboxLogin} />
   </Route>

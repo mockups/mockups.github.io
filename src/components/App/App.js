@@ -15,6 +15,7 @@ var imageURL = require('../../images/yeoman.png');
 function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
+    mockups: DropboxStore.mockups,
     files: DropboxStore.files,
     busy: DropboxStore.busy
   };
@@ -46,11 +47,21 @@ var MockupsApp = React.createClass({
 
   // Method to setState based upon Store changes
   _onChange() {
-    if (!this.state.logged === false) {
+    this.setState(getAppState());
+
+    var logged = this.state.logged;
+    var files = this.state.files;
+    var mockups = this.state.mockups;
+
+    if (this.state.logged === false) {
       this.context.router.replaceWith("dropbox-auth");
     }
 
-    this.setState(getAppState());
+    if (logged &&
+        !(files && files.length) &&
+        !(mockups && mockups.length) ) {
+      this.context.router.replaceWith("initial-setup");
+    }
   },
 
   logoutFromDropbox(e) {

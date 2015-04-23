@@ -2,14 +2,15 @@
 
 var React = require('react/addons');
 
+var DropboxActions = require('../../actions/DropboxActionCreators');
 var App = require('../App/App');
 
-var FileList = React.createClass({
+var MockupList = React.createClass({
   mixins: [App.requireAuthMixin],
 
   render() {
     return (
-      <div className="FileList">
+      <div className="MockupList">
         <ul>
           <li>1</li>
           <li>2</li>
@@ -19,4 +20,4 @@ var FileList = React.createClass({
   }
 });
 
-module.exports = FileList; 
+module.exports = MockupList; 

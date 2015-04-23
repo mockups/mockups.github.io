@@ -21,6 +21,7 @@ var busy = false;
 // Datatables
 var datastore = null;
 var tables = {};
+var mockups = [];
 
 var DropboxStore = assign({}, EventEmitter.prototype, {
   /**
@@ -41,6 +42,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
   files: null,
 
+  mockups: null,
+
   /**
    * Checks if folder with provided path already exists
    * @param path {string} the path to the file or folder whose metadata will be read, relative to the user's Dropbox or to the application's folder
@@ -52,7 +55,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   },
 
   /**
-   * Get list of all files
+   * Get list of all available files
    * @returns 
    */
   getFiles() {
@@ -61,11 +64,11 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     }
 
     client.readdir("/", (error, contents, folder, entries) => {
-      console.log(error);
+      /*console.log(error);
       console.log(contents);
       console.log(folder);
-      console.log(entries);
-      this.files = true;
+      console.log(entries);*/
+      this.files = contents;
       this.emitChange();
     });
   },
@@ -103,19 +106,17 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @returns {(Object|Object[])} record or set of records that has been changed
    */
   set(params) {
-    var targets = DropboxStore.get(params);
+    var records = DropboxStore.get(params);
 
-    if (!targets) {
-      targets = tables[params.table].insert(params.data);
-    } else if (!targets.length) {
-      targets.update(params.data);
-    } else {
-      targets = targets.map(function(record) {
-        return record.update(params.data);
-      });
+    if (!(params.query && records)) {
+      return tables[params.table].insert(params.data);
     }
 
-    return targets;
+    records = records.map(function(record) {
+      return record.update(params.data);
+    });
+
+    return records;
   },
 
   /**
@@ -126,12 +127,10 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @returns {(Object|Object[])} record or set of records that mathes query
    */
   find(params) {
-    var results = tables[params.table].query(params.query);
+    var results = tables[params.table].query(params.query || {});
 
     if (!results.length) {
-      return;
-    } else if (results.length === 1) {
-      return results[0];
+      return [];
     }
 
     return results;
@@ -146,11 +145,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   delete(params) {
     var targets = DropboxStore.find(params);
 
-    if (!targets) {
-      return;
-    } else if (!targets.length) {
-      targets.deleteRecord();
-    } else {
+    if (targets) {
       targets.map(function(record) {
         return record.deleteRecord();
       });
@@ -177,15 +172,49 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   openDatastore() {
     var datastoreManager = client.getDatastoreManager();
 
-    datastoreManager.openDefaultDatastore(function (error, defaultDatastore) {
+    datastoreManager.openDefaultDatastore( (error, defaultDatastore) => {
         if (error) {
             console.log('Error opening default datastore: ' + error);
             return;
         }
 
         datastore = defaultDatastore;
-        DropboxStore.emitChange();
+
+        // Watch changes at datatables
+        tables["mockups"] = datastore.getTable("mockups");
+        datastore.recordsChanged.addListener( (event) => {
+          var changedMockups = event.affectedRecordsForTable('mockups');
+          this.mockups = this.find({table: "mockups"});
+        });
+
+        this.mockups = this.find({table: "mockups"});
+
+        this.emitChange();
     });
+  },
+
+  createDemo() {
+    console.log(this.files, this.mockups);
+    if (!datastore || 
+        (this.files && this.files.length &&
+         this.mockups && this.mockups.length) ) {
+      return;
+    }
+
+    client.writeFile("/somefile.txt", "Hello", {}, () => {
+      this.getFiles();
+    });
+
+    var res = this.set({
+      table: "mockups",
+      query: {
+        name: "Demo mockup"
+      },
+      data: {
+        name: "Demo mockup"
+      }
+    });
+    console.log(res);
   },
 
   /**
@@ -194,7 +223,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @returns {Boolean} Indication if we've emitted an event.
    */
   emitChange() {
-    return DropboxStore.emit(CHANGE_EVENT);
+    return this.emit(CHANGE_EVENT);
   },
 
   /**
@@ -203,7 +232,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @param {function} callback Callback function.
    */
   addChangeListener(callback) {
-    DropboxStore.on(CHANGE_EVENT, callback);
+    this.on(CHANGE_EVENT, callback);
   },
 
   /**
@@ -212,7 +241,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
    * @param {function} callback Callback function.
    */
   removeChangeListener(callback) {
-    DropboxStore.removeListener(CHANGE_EVENT, callback);
+    this.removeListener(CHANGE_EVENT, callback);
   }
 });
 
@@ -234,6 +263,10 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
 
     case ActionTypes.DROPBOX_CHECK_FOLDER_EXISTS:
       DropboxStore.checkFolderExists(action.data.path, action.data.cb);
+      break;
+
+    case ActionTypes.DROPBOX_CREATE_DEMO:
+      DropboxStore.createDemo();
       break;
 
     default:

@@ -38,6 +38,13 @@ var DropboxActionCreators = {
       type: ActionTypes.DROPBOX_CREATE_ROOT_FOLDER,
       data: data
     });
+  },
+
+  createDemo: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.DROPBOX_CREATE_DEMO,
+      data: data
+    });
   }
 
 };

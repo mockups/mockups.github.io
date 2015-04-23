@@ -22,7 +22,7 @@ var DropboxLogin = React.createClass({
     if (nextPath) {
       router.replaceWith(nextPath);
     } else {
-      router.replaceWith("/");
+      router.replaceWith("mockup-list");
     }
   },
 

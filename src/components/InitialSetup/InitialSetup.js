@@ -14,15 +14,24 @@ var InitialSetup = React.createClass({
   mixins: [App.requireAuthMixin],
 
   componentDidMount() {
-    DropboxActions.createDemo();
+    this.proceed() || DropboxActions.createDemo();
   },
 
   componentDidUpdate() {
-    if (this.props.files.length && this.props.mockups.length) {
+    this.proceed();
+  },
+
+  proceed() {
+    var files = this.props.files;
+    var mockups = this.props.mockups;
+
+    console.log(files, mockups);
+
+    if (files && files.length && mockups && mockups.length) {
       this.context.router.replaceWith("mockup-list");
-    } else {
-      DropboxActions.createDemo();
     }
+
+    return false;
   },
 
   render() {

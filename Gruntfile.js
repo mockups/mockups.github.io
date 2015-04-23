@@ -29,7 +29,7 @@ module.exports = function (grunt) {
         hot: true,
         port: 8000,
         webpack: webpackDevConfig,
-        publicPath: '/assets/',
+        publicPath: 'http://localhost:8000/assets/',
         contentBase: './<%= pkg.src %>/',
         historyApiFallback: true
       },
@@ -90,7 +90,13 @@ module.exports = function (grunt) {
             expand: true,
             src: ['<%= pkg.src %>/images/*'],
             dest: '<%= pkg.dist %>/images/'
-          }
+          },
+          {
+            flatten: true,
+            expand: true,
+            src: ['<%= pkg.src %>/demo/*'],
+            dest: '<%= pkg.dist %>/demo/'
+          },
         ]
       }
     },

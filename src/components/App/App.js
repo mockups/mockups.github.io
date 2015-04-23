@@ -18,8 +18,7 @@ function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
     mockups: MockupStore.mockups,
-    files: DropboxStore.files,
-    busy: DropboxStore.busy
+    files: DropboxStore.files
   };
 }
 
@@ -36,6 +35,7 @@ var MockupsApp = React.createClass({
   // Add change listeners to stores
   componentDidMount() {
     DropboxStore.addChangeListener(this._onChange);
+    MockupStore.addChangeListener(this._onChange);
     // Check if user is already logged into Dropbox
     DropboxActions.initLogin({
       interactive: false

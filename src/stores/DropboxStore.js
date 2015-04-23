@@ -6,7 +6,6 @@ var ActionTypes = require('../constants/ActionTypes');
 var Paths = require('../constants/Paths');
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
-var MockupStore = require('./MockupStore');
 
 var CHANGE_EVENT = 'change';
 
@@ -36,6 +35,7 @@ var demoFiles = [
 ];
 
 var DropboxStore = assign({}, EventEmitter.prototype, {
+
   /**
    * Checks if client is logged into Dropbox
    *
@@ -48,9 +48,6 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
     return client.isAuthenticated();
   },
-
-
-  busy: false,
 
   files: null,
 
@@ -133,14 +130,15 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   find(params) {
     var results;
 
+    // Datastore is not yet opened
+    if (!tables[params.table]) {
+      return [];
+    }
+
     if (typeof params.query === 'object' || typeof params.query === 'undefined') {
       results = tables[params.table].query(params.query || {});
     } else {
-      results = tables[params.table].get(params.query);
-    }
-
-    if (!results.length) {
-      return [];
+      results = [tables[params.table].get(params.query)];
     }
 
     return results;
@@ -154,11 +152,9 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   remove(params) {
     var targets = DropboxStore.find(params);
 
-    if (targets) {
-      targets.map(function(record) {
-        return record.deleteRecord();
-      });
-    }
+    targets.map(function(record) {
+      return record.deleteRecord();
+    });
   },
 
   /**
@@ -193,10 +189,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
         tables["mockups"] = datastore.getTable("mockups");
         datastore.recordsChanged.addListener( (event) => {
           var changedMockups = event.affectedRecordsForTable('mockups');
-          MockupStore.mockups = this.find({table: "mockups"});
+          this.emitChange();
         });
-
-        MockupStore.mockups = this.find({table: "mockups"});
 
         this.emitChange();
     });
@@ -204,7 +198,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
   createDemo() {
     var files = this.files;
-    var mockups = MockupStore.mockups;
+    var mockups = this.find({table: "mockups"});
 
     if (!datastore || 
         (files && files.length &&

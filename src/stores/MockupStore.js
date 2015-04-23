@@ -11,7 +11,20 @@ var CHANGE_EVENT = 'change';
 
 
 var MockupStore = assign({}, EventEmitter.prototype, {
+
   mockups: null,
+
+  /**
+   * Creates new mockup
+   */
+  create() {
+    DropboxStore.set({
+      table: "mockups",
+      data: {
+        name: "New mockup"
+      }
+    });
+  },
 
   /**
    * Changes name of given mockup
@@ -20,12 +33,35 @@ var MockupStore = assign({}, EventEmitter.prototype, {
    * @param {string} params.name New name that shall be given to mockup
    */
   rename(params) {
-    console.log(DropboxStore);
     DropboxStore.set({
       table: "mockups",
       query: params.id,
-      data: params.name
+      data: {
+        name: params.name
+      }
     });
+  },
+
+  /**
+   * Removes a mockup
+   *
+   * @param {string} params.id Identifies mockup to be removed
+   */
+  remove(params) {
+    DropboxStore.remove({
+      table: "mockups",
+      query: params.id
+    });
+
+    this.emitChange();
+  },
+
+  /**
+   * Retrieves a list of mockups from dropbox
+   */
+  getMockups() {
+    this.mockups = DropboxStore.find({table: "mockups"});
+    this.emitChange();
   },
 
   /**
@@ -64,10 +100,22 @@ MockupStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
     MockupStore.rename(action.data);
     break;
 
+    case ActionTypes.MOCKUP_CREATE:
+    MockupStore.create();
+    break;
+
+    case ActionTypes.MOCKUP_REMOVE:
+    MockupStore.remove(action.data);
+    break;
+
     default:
       // Do nothing
   }
 
+});
+
+DropboxStore.addChangeListener(function(){
+  MockupStore.getMockups();
 });
 
 module.exports = MockupStore; 

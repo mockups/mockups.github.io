@@ -10,5 +10,6 @@ module.exports = keyMirror({
   DROPBOX_CHECK_FOLDER_EXISTS: null,   // Checks if folder exists
   DROPBOX_CREATE_ROOT_FOLDER: null,    // Creates root folder and fill it with demo content
   DROPBOX_CREATE_DEMO: null,           // Creates demo mockup
+  MOCKUP_CREATE: null,                 // Creates mockup
   MOCKUP_RENAME: null                  // Renames mockup
 });

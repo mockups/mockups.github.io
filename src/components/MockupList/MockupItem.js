@@ -14,13 +14,13 @@ var MockupItem = React.createClass({
   },
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleClick, false);
+    this.toggleListener(false);
   },
 
   rename(e) {
     e.preventDefault();
     this.setState({edit: true});
-    document.addEventListener("click", this.handleClick, false);
+    this.toggleListener(true);
   },
 
   remove(e) {
@@ -34,12 +34,20 @@ var MockupItem = React.createClass({
   },
 
 
-  handleClick(e) {
-    if (this.getDOMNode().contains(e.target)) {
+  handleEditEnd(e) {
+    var type = e.type;
+    var node = this.getDOMNode();
+
+    if (type === "click" && node.contains(e.target)) {
       return;
     }
 
-    document.removeEventListener("click", this.handleClick, false);
+    var key = e.which || e.keyCode;
+    if (type === "keypress" && key && key !== 13) { // Enter
+      return;
+    }
+
+    this.toggleListener(false);
 
     MockupActions.rename({
       id: this.props.id,
@@ -47,6 +55,16 @@ var MockupItem = React.createClass({
     });
 
     this.setState({edit: false});
+  },
+
+  toggleListener(state) {
+    if (state) {
+      document.addEventListener("click", this.handleEditEnd, false);
+      document.addEventListener('keypress', this.handleEditEnd, false);
+    } else {
+      document.removeEventListener("click", this.handleEditEnd, false);
+      document.removeEventListener("keypress", this.handleEditEnd, false);
+    }
   },
 
   handleChange(e) {

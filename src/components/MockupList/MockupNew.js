@@ -3,7 +3,6 @@
 var React = require('react/addons');
 
 var MockupActions = require('../../actions/MockupActionCreators');
-var App = require('../App/App');
 
 var MockupNew = React.createClass({
   create() {

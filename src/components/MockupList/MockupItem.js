@@ -1,9 +1,10 @@
 'use strict';
 
 var React = require('react/addons');
+var Router = require('react-router');
+var Link = Router.Link;
 
 var MockupActions = require('../../actions/MockupActionCreators');
-var App = require('../App/App');
 
 var MockupItem = React.createClass({
   getInitialState() {
@@ -85,7 +86,7 @@ var MockupItem = React.createClass({
         { this.state.edit ?
           <p><input ref={ setFocus } type="text" defaultValue={this.state.name} onChange={this.handleChange}></input></p> :
           <p>
-            <span className="MockupItem__name">{this.state.name}</span> 
+            <Link className="MockupItem__name" to="mockup-edit" params={{mockupId: this.props.id}}>{this.state.name}</Link> 
             <a className="MockupItem__edit" href="#" onClick={this.rename}>rename</a> 
             <a className="MockupItem__remove" href="#" onClick={this.remove}>remove</a>
           </p>

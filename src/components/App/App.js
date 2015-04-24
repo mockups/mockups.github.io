@@ -104,7 +104,7 @@ MockupsApp.requireAuthMixin = {
   statics: {
     willTransitionTo: function (transition) {
       if (!DropboxStore.isLogged()) {
-        transition.redirect(Paths.LOGIN, {}, {'nextPath' : transition.path});
+        transition.redirect("dropbox-auth", {}, {'nextPath' : transition.path});
       }
     }
   }

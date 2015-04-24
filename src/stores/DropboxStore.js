@@ -312,15 +312,12 @@ var getFolderFiles = function(path, dir) {
 
     contents = contents.map(function(file) {
       if (file.isFile) {
-        return {
-          path: path,
-          nodes: [file],
-          type: "file"
-        };
+        return file;
       } else if (file.isFolder && file.path !== path) {
         var mock = {
           path: file.path,
-          type: "folder"
+          type: "folder",
+          name: file.name
         };
         getFolderFiles(file.path, mock);
         return mock;

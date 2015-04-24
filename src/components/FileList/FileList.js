@@ -14,8 +14,6 @@ var FileList = React.createClass({
   render() {
     var items = "";
 
-    console.log(this.props.files);
-
     if (this.props.files) {
       items = this.props.files.map(function(item) {
         return <FileItem key={item.path} data={item}/>;

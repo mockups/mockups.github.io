@@ -77,17 +77,24 @@ var MockupsApp = React.createClass({
     return (
       <div className="App">
         <nav>
-          <ul>
-            {
-              this.state.logged ?
+          {
+            this.state.logged ?
+            // User logged
+            <ul>
               <li>
                 <a href="#" onClick={this.logoutFromDropbox}>Logout</a>
-              </li> :
+              </li>
+              <li>
+                <Link to="mockup-list">Mockups</Link>
+              </li>
+            </ul>
+            : // User not logged
+            <ul>
               <li>
                 <Link to="dropbox-auth">Login</Link>
               </li>
-            }
-          </ul>
+            </ul>
+          }
         </nav>
         <main>
           <ReactTransitionGroup transitionName="fade">

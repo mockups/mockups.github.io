@@ -10,11 +10,12 @@
   "mainInput": "main",
   "mainOutput": "main",
   "dependencies": {
-    "flux": "^2.0.1",
     "events": "^1.0.2",
+    "flux": "^2.0.1",
+    "normalize.css": "~3.0.3",
     "object-assign": "^2.0.0",
     "react": "~0.13.1",
-    "normalize.css": "~3.0.3"
+    "react-dnd": "^0.9.8"
   },
   "devDependencies": {
     "babel": "^4.0.0",

@@ -5,6 +5,7 @@ var React = require('react/addons');
 var MockupActions = require('../../actions/MockupActionCreators');
 var App = require('../App/App');
 var FileList = require('../FileList/FileList');
+var MockupContainer = require('./MockupContainer');
 
 var MockupEdit = React.createClass({
   contextTypes: {
@@ -24,6 +25,7 @@ var MockupEdit = React.createClass({
       <div className="MockupEdit">
         {this.state.id}
         <FileList files={this.props.files}/>
+        <MockupContainer />
       </div>
     );
   }

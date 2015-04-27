@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react/addons');
-var Router = require('react-treeview');
 
 var App = require('../App/App');
 var FileItem = require('./FileItem');

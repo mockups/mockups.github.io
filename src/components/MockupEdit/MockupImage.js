@@ -22,7 +22,7 @@ var style = {
   padding: '0.5rem'
 };
 
-var Image = React.createClass({
+var Img = React.createClass({
   mixins: [DragDropMixin],
 
   propTypes: {
@@ -37,9 +37,7 @@ var Image = React.createClass({
         dragSource: {
           beginDrag(component) {
             return {
-              item: {
-                image: component.props.image
-              }
+              item: component.props
             };
           }
         }
@@ -51,17 +49,18 @@ var Image = React.createClass({
     var { left, top, children } = this.props;
 
     return (
-      <img src={this.props.image.url} 
+      <img src={this.props.url} 
         {...this.dragSourceFor(ItemTypes.IMAGE)}
         style={{
-              position: 'absolute',
-              border: '1px dashed gray',
-              padding: '0.5rem',
-              left,
-              top
-           }} />
+          position: 'absolute',
+          border: '1px dashed gray',
+          padding: '0.5rem',
+          left,
+          top
+        }} 
+      />
     );
   }
 });
 
-module.exports = Image;
+module.exports = Img;

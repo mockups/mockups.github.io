@@ -4,24 +4,24 @@ var React = require('react/addons');
 var update = require('react/lib/update');
 var DragDropMixin = require('react-dnd').DragDropMixin;
 
-var ItemTypes = require('../../constants/ElementTypes');
+var ItemTypes = require('../../constants/ItemTypes');
 var Box = require('./MockupBox');
+var Img = require('./MockupImage');
 
-function makeDropTarget(context) {
+function makeDropTarget(context, type) {
   return {
     acceptDrop: function(component, item) {
       var delta = context.getCurrentOffsetDelta();
       var left = Math.round(item.left + delta.x);
       var top = Math.round(item.top + delta.y);
-
-      component.moveBox(item.id, left, top);
+      component.moveItem(item.id, type, left, top);
     }
   };
 }
 
 var styles = {
-  width: 300,
-  height: 300,
+  width: 1300,
+  height: 1300,
   border: '1px solid black',
   position: 'relative'
 };
@@ -33,7 +33,10 @@ var Container = React.createClass({
     return {
       boxes: {
         'a': { top: 20, left: 80, title: 'Drag me around' },
-        'b': { top: 180, left: 20, title: 'Drag me too' }
+        'b': { top: 180, left: 20, title: 'Drag me too' },
+      },
+      imgs: {
+        'c': { top: 180, left: 40, title: 'i am image!', url:'http://ponych.at/apple-touch-icon.png' }
       }
     };
   },
@@ -41,14 +44,17 @@ var Container = React.createClass({
   statics: {
     configureDragDrop(register, context) {
       register(ItemTypes.BOX, {
-        dropTarget: makeDropTarget(context)
+        dropTarget: makeDropTarget(context, 'boxes')
+      });
+      register(ItemTypes.IMAGE, {
+        dropTarget: makeDropTarget(context, 'imgs')
       });
     }
   },
 
-  moveBox(id, left, top) {
+  moveItem(id, type, left, top) {
     this.setState(update(this.state, {
-      boxes: {
+      [type]: {
         [id]: {
           $merge: {
             left: left,
@@ -74,9 +80,25 @@ var Container = React.createClass({
       );
     });
 
+    var imgs = this.state.imgs;
+    var imgNodes = Object.keys(imgs).map(key => {
+      var { left, top, title, url } = imgs[key];
+
+      return (
+        <Img key={key}
+             id={key}
+             left={left}
+             top={top}
+             url={url} />
+      );
+    });
+
+    var supportedTypes = [ItemTypes.BOX, ItemTypes.IMAGE];
+
     return (
-      <div {...this.dropTargetFor(ItemTypes.BOX)} style={styles}>
+      <div {...this.dropTargetFor(...supportedTypes)} style={styles}>
         {boxNodes}
+        {imgNodes}
       </div>
     );
   }

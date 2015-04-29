@@ -22,6 +22,8 @@ var FileItem = React.createClass({
   render() {
     var nodes = "";
     var isFolder = this.props.data.type === 'folder';
+    var thumbnail = this.props.data.thumbnail;
+    console.log(thumbnail);
     var children = this.props.data.nodes;
 
     if (children) {
@@ -41,13 +43,14 @@ var FileItem = React.createClass({
                 }
               </span> : ""
           }
-
+          {
+            thumbnail ?
+              <img src={thumbnail} alt={this.props.data.path}/> : ""
+          }
           <span>{this.props.data.name}</span>
-
           {
             isFolder && !this.state.collapsed ?
-              <ul>{nodes}</ul> :
-              ""
+              <ul>{nodes}</ul> : ""
           }
       </li>
     );

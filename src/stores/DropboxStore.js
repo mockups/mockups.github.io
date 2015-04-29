@@ -16,7 +16,6 @@ client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
 }));
 var triedToLogin = false;
-var busy = false;
 
 // Datatables
 var datastore = null;
@@ -312,6 +311,9 @@ var getFolderFiles = function(path, dir) {
 
     contents = contents.map(function(file) {
       if (file.isFile) {
+        if (file.hasThumbnail) {
+          file.thumbnail = client.thumbnailUrl(file.path);
+        }
         return file;
       } else if (file.isFolder && file.path !== path) {
         var mock = {

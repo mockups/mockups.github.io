@@ -11,10 +11,17 @@ var Img = require('./MockupImage');
 function makeDropTarget(context, type) {
   return {
     acceptDrop: function(component, item) {
+      var clientOffset = context.getCurrentOffsetFromClient();
+      var totalOffset = {
+        x: Math.round(document.body.scrollLeft + clientOffset.x),
+        y: Math.round(document.body.scrollTop + clientOffset.y)
+      };
       var delta = context.getCurrentOffsetDelta();
-      var left = Math.round(item.left + delta.x);
-      var top = Math.round(item.top + delta.y);
-      component.moveItem(item.id, type, left, top);
+      var relativeOffset = {
+        x: Math.round(item.left + delta.x),
+        y: Math.round(item.top + delta.y)
+      };
+      component.moveItem(item, type, totalOffset, relativeOffset);
     }
   };
 }
@@ -52,13 +59,29 @@ var Container = React.createClass({
     }
   },
 
-  moveItem(id, type, left, top) {
+  moveItem(item, type, total, relative) {
+    var id = item.id;
+    var left, top, method;
+    // Item already at the container
+    if (this.state[type][id]) {
+      method = "$merge";
+      left = relative.x;
+      top = relative.y;
+    } else { // New item has been dragged
+      method = "$set";
+      id = Math.random(); // TODO: check better ways
+      var container = this.getDOMNode();
+      var containerOffset = container.getBoundingClientRect();
+      left = total.x - containerOffset.left;
+      top = total.y - containerOffset.top;
+    }
     this.setState(update(this.state, {
       [type]: {
         [id]: {
-          $merge: {
+          [method]: {
             left: left,
-            top: top
+            top: top,
+            url: item.url
           }
         }
       }

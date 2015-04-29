@@ -314,6 +314,14 @@ var getFolderFiles = function(path, dir) {
         if (file.hasThumbnail) {
           file.thumbnail = client.thumbnailUrl(file.path);
         }
+        if (file.mimeType.indexOf('image') > -1) {
+          file.isImage = true;
+          client.makeUrl(file.path, {download: true}, function(error, data) {
+            if (data && !error) {
+              file.url = data.url;
+            }
+          });
+        }
         return file;
       } else if (file.isFolder && file.path !== path) {
         var mock = {

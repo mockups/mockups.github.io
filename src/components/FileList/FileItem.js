@@ -27,7 +27,7 @@ var FileItem = React.createClass({
 
   statics: {
     configureDragDrop(register) {
-      register(ItemTypes.IMAGE, {
+      register(ItemTypes.IMAGE, { // TODO: shall be separate type
         dragSource: {
           beginDrag(component) {
             return {

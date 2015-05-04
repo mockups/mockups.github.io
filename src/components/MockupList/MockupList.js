@@ -7,6 +7,8 @@ var MockupItem = require('./MockupItem');
 var MockupNew = require('./MockupNew');
 var Loading = require('../Loading/Loading');
 
+require('./MockupList.scss');
+
 var MockupList = React.createClass({
   mixins: [App.requireAuthMixin],
 
@@ -33,14 +35,12 @@ var MockupList = React.createClass({
     }
 
     return (
-      <div className="MockupList">
-        <ul>
-          {mockupNodes}
-          <li>
-            <MockupNew />
-          </li>
-        </ul>
-      </div>
+      <ul className="MockupList">
+        {mockupNodes}
+        <li className="MockupItem">
+          <MockupNew />
+        </li>
+      </ul>
     );
   }
 });

@@ -4,9 +4,10 @@ var React = require('react/addons');
 var update = require('react/lib/update');
 var DragDropMixin = require('react-dnd').DragDropMixin;
 
-var ItemTypes = require('../../constants/ItemTypes');
-var Box = require('./MockupBox');
-var Img = require('./MockupImage');
+var ObjectTypes = require('../../constants/ObjectTypes');
+
+var Box = require('../MockupObjects/MockupBox');
+var Img = require('../MockupObjects/MockupImage');
 
 function makeDropTarget(context, type) {
   return {
@@ -50,10 +51,13 @@ var Container = React.createClass({
 
   statics: {
     configureDragDrop(register, context) {
-      register(ItemTypes.BOX, {
+      register(ObjectTypes.BOX, {
         dropTarget: makeDropTarget(context, 'boxes')
       });
-      register(ItemTypes.IMAGE, {
+      register(ObjectTypes.IMAGE, {
+        dropTarget: makeDropTarget(context, 'imgs')
+      });
+      register(ObjectTypes.PREVIEW, {
         dropTarget: makeDropTarget(context, 'imgs')
       });
     }
@@ -116,7 +120,7 @@ var Container = React.createClass({
       );
     });
 
-    var supportedTypes = [ItemTypes.BOX, ItemTypes.IMAGE];
+    var supportedTypes = [ObjectTypes.BOX, ObjectTypes.IMAGE, ObjectTypes.PREVIEW];
 
     return (
       <div {...this.dropTargetFor(...supportedTypes)} style={styles}>

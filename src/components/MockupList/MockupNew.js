@@ -12,7 +12,7 @@ var MockupNew = React.createClass({
   render() {
     return (
       <div className="MockupNew">
-        <button onClick={this.create}>Add new mockup</button>
+        <a className="btn" onClick={this.create}>Add new mockup</a>
       </div>
     );
   }

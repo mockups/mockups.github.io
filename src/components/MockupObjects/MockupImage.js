@@ -5,7 +5,9 @@ var update = require('react/lib/update');
 var DragDropMixin = require('react-dnd').DragDropMixin;
 var DropEffects = require('react-dnd').DropEffects;
 
-var ItemTypes = require('../../constants/ItemTypes');
+var ObjectTypes = require('../../constants/ObjectTypes');
+
+require('./MockupItem.scss');
 
 var dragSource = {
   beginDrag(component) {
@@ -14,12 +16,6 @@ var dragSource = {
       item: component.props
     };
   }
-};
-
-var style = {
-  position: 'absolute',
-  border: '1px dashed gray',
-  padding: '0.5rem'
 };
 
 var Img = React.createClass({
@@ -33,7 +29,7 @@ var Img = React.createClass({
 
   statics: {
     configureDragDrop(register) {
-      register(ItemTypes.IMAGE, {
+      register(ObjectTypes.IMAGE, {
         dragSource: {
           beginDrag(component) {
             return {
@@ -49,12 +45,9 @@ var Img = React.createClass({
     var { left, top, children } = this.props;
 
     return (
-      <img src={this.props.url} 
-        {...this.dragSourceFor(ItemTypes.IMAGE)}
+      <img className="MockupObject MockupImage" src={this.props.url} 
+        {...this.dragSourceFor(ObjectTypes.IMAGE)}
         style={{
-          position: 'absolute',
-          border: '1px dashed gray',
-          padding: '0.5rem',
           left,
           top
         }} 

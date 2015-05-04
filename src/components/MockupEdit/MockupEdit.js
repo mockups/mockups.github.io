@@ -4,7 +4,8 @@ var React = require('react/addons');
 
 var MockupActions = require('../../actions/MockupActionCreators');
 var App = require('../App/App');
-var FileList = require('../FileList/FileList');
+var MockupActions = require('../../actions/MockupActionCreators');
+var MockupPanel = require('./MockupPanel');
 var MockupContainer = require('./MockupContainer');
 
 var MockupEdit = React.createClass({
@@ -14,17 +15,17 @@ var MockupEdit = React.createClass({
 
   mixins: [App.requireAuthMixin],
 
-  getInitialState: function() {
-    return {
-      id: this.context.router.getCurrentParams().mockupId
-    };
+  componentDidUpdate() {
+    if (!this.props.currentMockups) {
+      var currentMockup = this.context.router.getCurrentParams();
+      MockupActions.startEdit(currentMockup);
+    }
   },
 
   render() {
     return (
       <div className="MockupEdit">
-        {this.state.id}
-        <FileList files={this.props.files}/>
+        <MockupPanel files={this.props.files} />
         <MockupContainer />
       </div>
     );

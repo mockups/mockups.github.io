@@ -12,7 +12,7 @@ var CHANGE_EVENT = 'change';
 
 var MockupStore = assign({}, EventEmitter.prototype, {
 
-  mockups: null,
+  currentMockup: null,
 
   /**
    * Creates new mockup
@@ -60,8 +60,34 @@ var MockupStore = assign({}, EventEmitter.prototype, {
    * Retrieves a list of mockups from dropbox
    */
   getMockups() {
-    this.mockups = DropboxStore.find({table: "mockups"});
-    this.emitChange();
+    return DropboxStore.find({table: "mockups"});
+  },
+
+  /**
+   * Sets mockup as current by provided data
+   *
+   * @param (Object) params
+   * @param (String) params.mockupId Id of he mockup to set as current
+   */
+  selectMockup(params) {
+    var foundMockup = null;
+
+    if (params.mockupId) {
+      var mockups = this.getMockups();
+      for (var i = 0; i < mockups.length; i++) {
+        var mockup = mockups[i];
+        var id = mockup.getId();
+        if (id === params.mockupId) {
+          foundMockup = mockup;
+          break;
+        }
+      }
+    }
+
+    if (foundMockup !== this.currentMockup) {
+      this.currentMockup = foundMockup;
+      this.emitChange();
+    }
   },
 
   /**
@@ -108,14 +134,18 @@ MockupStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
     MockupStore.remove(action.data);
     break;
 
+    case ActionTypes.APP_TRANSITION:
+    MockupStore.selectMockup(action.data);
+    break;
+
+    case ActionTypes.MOCKUP_START_EDIT:
+    MockupStore.selectMockup(action.data);
+    break;
+
     default:
       // Do nothing
   }
 
-});
-
-DropboxStore.addChangeListener(function(){
-  MockupStore.getMockups();
 });
 
 module.exports = MockupStore; 

@@ -24,6 +24,13 @@ var MockupActionCreators = {
       type: ActionTypes.MOCKUP_REMOVE,
       data: data
     });
+  },
+
+  startEdit: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.MOCKUP_START_EDIT,
+      data: data
+    });
   }
 
 };

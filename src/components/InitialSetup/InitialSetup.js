@@ -14,7 +14,9 @@ var InitialSetup = React.createClass({
   mixins: [App.requireAuthMixin],
 
   componentDidMount() {
-    this.proceed() || DropboxActions.createDemo();
+    if (!this.proceed()) {
+      DropboxActions.createDemo();
+    }
   },
 
   componentDidUpdate() {
@@ -24,8 +26,6 @@ var InitialSetup = React.createClass({
   proceed() {
     var files = this.props.files;
     var mockups = this.props.mockups;
-
-    console.log(files, mockups);
 
     if (files && files.length && mockups && mockups.length) {
       this.context.router.replaceWith("mockup-list");

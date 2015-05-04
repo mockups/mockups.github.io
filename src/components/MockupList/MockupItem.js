@@ -38,22 +38,30 @@ var MockupItem = React.createClass({
   handleEditEnd(e) {
     var type = e.type;
     var node = this.getDOMNode();
+    var save = true;
 
     if (type === "click" && node.contains(e.target)) {
       return;
     }
 
     var key = e.which || e.keyCode;
-    if (type === "keypress" && key && key !== 13) { // Enter
-      return;
+    if (type === "keyup") {
+      if (key !== 13 && key !== 27) { // Not Enter or Esc
+        return;
+      } else if (key === 27) { // Esc
+        save = false;
+      }
     }
-
     this.toggleListener(false);
 
-    MockupActions.rename({
-      id: this.props.id,
-      name: this.state.name
-    });
+    if (save) {
+      MockupActions.rename({
+        id: this.props.id,
+        name: this.state.name
+      });
+    } else {
+      this.setState({name: this.props.name});
+    }
 
     this.setState({edit: false});
   },
@@ -61,10 +69,10 @@ var MockupItem = React.createClass({
   toggleListener(state) {
     if (state) {
       document.addEventListener("click", this.handleEditEnd, false);
-      document.addEventListener('keypress', this.handleEditEnd, false);
+      document.addEventListener('keyup', this.handleEditEnd, false);
     } else {
       document.removeEventListener("click", this.handleEditEnd, false);
-      document.removeEventListener("keypress", this.handleEditEnd, false);
+      document.removeEventListener("keyup", this.handleEditEnd, false);
     }
   },
 
@@ -84,12 +92,26 @@ var MockupItem = React.createClass({
     return (
       <div className="MockupItem">
         { this.state.edit ?
-          <p><input ref={ setFocus } type="text" defaultValue={this.state.name} onChange={this.handleChange}></input></p> :
-          <p>
-            <Link className="MockupItem__name" to="mockup-edit" params={{mockupId: this.props.id}}>{this.state.name}</Link> 
-            <a className="MockupItem__edit" href="#" onClick={this.rename}>rename</a> 
-            <a className="MockupItem__remove" href="#" onClick={this.remove}>remove</a>
-          </p>
+          <input className="MockupItem__name MockupItem__edit" ref={ setFocus } type="text" defaultValue={this.state.name} onChange={this.handleChange}></input>
+          :
+          <div>
+            <div className="MockupItem__name">
+              <Link to="mockup-edit" params={{mockupId: this.props.id}}>{this.state.name}</Link> 
+            </div>
+
+            <div className="MockupItem__actions">
+              (
+              <a href="#" onClick={this.rename}>
+                <i className="fa fa-pencil"></i>
+                rename
+              </a>,&nbsp;
+              <a href="#" onClick={this.remove}>
+                <i className="fa fa-trash"></i>
+                remove
+              </a>
+              )
+            </div>
+          </div>
         }
       </div>
     );

@@ -2,10 +2,11 @@
 
 var React = require('react/addons');
 
-var ItemTypes = require('../../constants/ItemTypes');
+var ObjectTypes = require('../../constants/ObjectTypes');
 
 var RequireAuthMixin = require('../App/App').requireAuthMixin;
 var DragDropMixin = require('react-dnd').DragDropMixin;
+var DropEffects = require('react-dnd').DropEffects;
 
 var dragSource = {
   beginDrag(component) {
@@ -16,18 +17,12 @@ var dragSource = {
   }
 };
 
-var style = {
-  position: 'absolute',
-  border: '1px dashed gray',
-  padding: '0.5rem'
-};
-
 var FileItem = React.createClass({
   mixins: [RequireAuthMixin, DragDropMixin],
 
   statics: {
     configureDragDrop(register) {
-      register(ItemTypes.IMAGE, { // TODO: shall be separate type
+      register(ObjectTypes.PREVIEW, {
         dragSource: {
           beginDrag(component) {
             return {
@@ -56,7 +51,7 @@ var FileItem = React.createClass({
     var isFolder = this.props.data.type === 'folder';
     var thumbnail = this.props.data.thumbnail;
     var children = this.props.data.nodes;
-    var dragSource = this.props.data.isImage ? this.dragSourceFor(ItemTypes.IMAGE) : {};
+    var dragSource = this.props.data.isImage ? this.dragSourceFor(ObjectTypes.PREVIEW) : {};
 
     if (children) {
       nodes = children.map(function(node) {

@@ -10,14 +10,17 @@
   "mainInput": "main",
   "mainOutput": "main",
   "dependencies": {
+    "compass-mixins": "^0.12.3",
     "events": "^1.0.2",
     "flux": "^2.0.1",
     "normalize.css": "~3.0.3",
     "object-assign": "^2.0.0",
     "react": "~0.13.1",
-    "react-dnd": "^0.9.8"
+    "react-dnd": "^0.9.8",
+    "react-router": "^0.13.3"
   },
   "devDependencies": {
+    "autoprefixer-loader": "^1.2.0",
     "babel": "^4.0.0",
     "babel-loader": "^4.0.0",
     "compass": "^0.1.1",
@@ -42,7 +45,6 @@
     "load-grunt-tasks": "~0.6.0",
     "node-sass": "^2.1.1",
     "react-hot-loader": "^1.0.7",
-    "react-router": "^0.13.2",
     "sass-loader": "^0.4.2",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",

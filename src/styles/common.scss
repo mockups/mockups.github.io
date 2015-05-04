@@ -1,3 +1,33 @@
+@import "variables";
+
 body, html {
-  
+  font-size: 18px;
+  color: $color__root;
+  background-color: $color__background;
+	font-family: Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
 }
+
+ul, ol {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	transition: color 0.2s ease-in,
+				border-color 0.2s ease-in;
+
+	&, &:hover, &:focus, &:active {
+		color: $color__root;
+		text-decoration: none;
+		border-bottom: 1px solid lighten($color__root, 50%);
+	}
+
+	&:hover {
+		color: $color__secondary;
+		border-color: lighten($color__secondary, 20%);
+		transition: none;
+	}
+}
+
+@import "buttons";

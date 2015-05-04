@@ -1,0 +1,30 @@
+@import '../../styles/variables';
+
+.MockupList {
+  list-style-type: none;
+}
+
+.MockupItem {
+  padding: 1em 0em;
+
+  i {
+    margin-right: 0.2em;
+  }
+
+  &__name {
+    display: inline-block;
+    font-size: $font_size__header;
+    vertical-align: bottom;
+  }
+
+  &__edit {
+    width: 100%;
+    border: none;
+    outline: none;
+  }
+
+  &__actions {
+    display: inline-block;
+    margin-left: 0.5em;
+  }
+}

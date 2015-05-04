@@ -1,5 +1,10 @@
 'use strict';
 
+// Dropbox authentication works only over https
+if (window.location.hostname !== "localhost" && window.location.protocol !== "https:") {
+  window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+}
+
 import Paths from '../constants/Paths';
 
 // Core
@@ -9,6 +14,7 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var Redirect = Router.Redirect;
 var NotFoundRoute = Router.NotFoundRoute;
+var AppActions = require('../actions/AppActionCreators');
 
 // CSS
 require('normalize.css');
@@ -29,10 +35,12 @@ var Routes = (
     <Route name="initial-setup" path={Paths.INITIAL_SETUP} handler={InitialSetup}  />
     <Route name="mockup-list" path={Paths.MOCKUP_LIST} handler={MockupList} />
     <Route name="mockup-edit" path={Paths.MOCKUP_LIST + "/:mockupId"} handler={MockupEdit} />
+    <Route path="/:params" handler={OauthReciever} />
     <NotFoundRoute handler={DropboxLogin} />
   </Route>
 );
 
-Router.run(Routes, Router.HistoryLocation, function (Handler) {
+Router.run(Routes, function (Handler, state) {
   React.render(<Handler/>, document.getElementById("content"));
+  AppActions.transition(state.params);
 });

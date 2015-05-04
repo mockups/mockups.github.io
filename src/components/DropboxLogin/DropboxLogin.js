@@ -3,6 +3,7 @@
 var React = require('react/addons');
 
 var DropboxActions = require('../../actions/DropboxActionCreators');
+var Logo = require('../Logo/Logo');
 var Loading = require('../Loading/Loading');
 require('./DropboxLogin.scss');
 
@@ -45,9 +46,16 @@ var DropboxLogin = React.createClass({
       <div className="DropboxLogin">
           {
             this.props.logged === false ?
-            <button type="button" onClick={this.loginToDropbox}>
-              Login with Dropbox
-            </button>:
+            // User not logged
+            <div className="Hero">
+              <Logo type="big"/>
+              <p>A demonstration project for UI Kit approach to&nbsp;structure visual components in your project.</p>
+              <a onClick={this.loginToDropbox} className="btn btn--dropbox">
+                <i className="fa fa-dropbox"></i>
+                Login with Dropbox
+              </a>
+            </div>:
+            // Undefined state (redirect will occure if logged)
             <Loading />
           }
       </div>

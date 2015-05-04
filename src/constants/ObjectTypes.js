@@ -2,5 +2,6 @@
 
 export default {
   BOX: 'box',
-  IMAGE: 'image'
+  IMAGE: 'image',
+  PREVIEW: 'preview'
 };

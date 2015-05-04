@@ -6,6 +6,7 @@ var ActionTypes = require('../constants/ActionTypes');
 var Paths = require('../constants/Paths');
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
+var DropboxActions = require('../actions/DropboxActionCreators');
 
 var CHANGE_EVENT = 'change';
 
@@ -13,7 +14,7 @@ var CHANGE_EVENT = 'change';
 var Dropbox = require("dropbox");
 var client = new Dropbox.Client({ key: 'c3yzhain4om1l95' });
 client.authDriver(new Dropbox.AuthDriver.Popup({
-  receiverUrl: window.location.origin + "/" + Paths.OAUTH_RECIEVER
+  receiverUrl: window.location.origin
 }));
 var triedToLogin = false;
 
@@ -185,11 +186,13 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
         datastore = defaultDatastore;
 
         // Watch changes at datatables
-        tables["mockups"] = datastore.getTable("mockups");
+        tables.mockups = datastore.getTable("mockups");
         datastore.recordsChanged.addListener( (event) => {
           var changedMockups = event.affectedRecordsForTable('mockups');
           this.emitChange();
         });
+
+        DropboxActions.readyDatastore();
 
         this.emitChange();
     });
@@ -282,7 +285,6 @@ DropboxStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
 
     default:
       // Do nothing
-
   }
 
 });

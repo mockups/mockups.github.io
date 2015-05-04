@@ -13,12 +13,18 @@ var MockupActions = require('../../actions/MockupActionCreators');
 var Paths = require('../../constants/Paths');
 var imageURL = require('../../images/yeoman.png');
 
+var Logo = require('../Logo/Logo');
+var GithubRibbon = require('./GithubRibbon');
+
+require('./App.scss');
+
 // Retrieve state from Stores
 function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
-    mockups: MockupStore.mockups,
-    files: DropboxStore.files
+    mockups: MockupStore.getMockups(),
+    files: DropboxStore.files,
+    currentMockup: MockupStore.currentMockup
   };
 }
 
@@ -76,27 +82,39 @@ var MockupsApp = React.createClass({
 
     return (
       <div className="App">
-        <nav>
-          {
-            this.state.logged ?
-            // User logged
-            <ul>
-              <li>
+        {
+          this.state.logged ?
+          // User logged
+          <nav className="Nav">
+            <div className="Nav__Item Nav__Item--prior">
+              <Logo type="small"/>
+            </div>
+            <div className="Nav__Item Nav__Mockup_Name Nav__Item--prior">
+              {this.state.currentMockup ? this.state.currentMockup.get("name") : ""}
+            </div>
+            <ul className="Nav__Item">
+              <li className="Nav__Item">
+                <Link to="mockup-list">List of mockups</Link>
+              </li>
+              <li className="Nav__Item">
                 <a href="#" onClick={this.logoutFromDropbox}>Logout</a>
               </li>
-              <li>
-                <Link to="mockup-list">Mockups</Link>
-              </li>
             </ul>
-            : // User not logged
+          </nav>
+          : // User not logged
+          <nav className="Nav">
+            <div className="Nav__Item Nav__Item--prior">
+              <Logo type="small"/>
+            </div>
             <ul>
-              <li>
+              <li className="Nav__Item">
                 <Link to="dropbox-auth">Login</Link>
               </li>
             </ul>
-          }
-        </nav>
-        <main>
+          </nav>
+        }
+        <GithubRibbon />
+        <main className="Content">
           <ReactTransitionGroup transitionName="fade">
             <RouteHandler {...this.state} />
           </ReactTransitionGroup>

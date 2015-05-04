@@ -45,6 +45,13 @@ var DropboxActionCreators = {
       type: ActionTypes.DROPBOX_CREATE_DEMO,
       data: data
     });
+  },
+
+  readyDatastore: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.DROPBOX_DATASTORE_READY,
+      data: data
+    });
   }
 
 };

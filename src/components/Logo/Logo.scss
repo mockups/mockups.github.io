@@ -1,0 +1,53 @@
+@import '../../styles/variables';
+
+.Logo {
+  &__Figure {
+    transform: rotate(45deg);
+  }
+
+  a {
+    &, &:active, &:focus, &:hover {
+      border: none;
+    }
+  }
+}
+
+.Logo.Logo--small {
+  font-size: 1.5rem;
+
+  .Logo__Label {
+    margin-left: 0.5em;
+    display: inline;
+  }
+
+  .Logo__Figure {
+    color: $color__background;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -4px;
+      width: 1.1em;
+      height: 1.1em;
+      background-color: $color__secondary;
+      border-radius: 0.5rem;
+      z-index: -1;
+    }
+  }
+}
+
+.Logo.Logo--big {
+  .Logo__Label,
+  .Logo__Figure {
+    color: $color__secondary;
+  }
+
+  .Logo__Label {
+    font-size: 2em;
+  }
+
+  .Logo__Figure {
+    font-size: 4em;
+  }
+}

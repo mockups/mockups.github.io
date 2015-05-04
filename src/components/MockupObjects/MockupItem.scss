@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+
+.MockupObject {
+  position: absolute;
+  border: 1px dashed;
+  border-color: transparent;
+
+  &:hover {
+    border-color: $color__border;
+  }
+}

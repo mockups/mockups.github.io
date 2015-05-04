@@ -11,7 +11,6 @@ var DropboxActions = require('../../actions/DropboxActionCreators');
 var MockupStore = require('../../stores/MockupStore');
 var MockupActions = require('../../actions/MockupActionCreators');
 var Paths = require('../../constants/Paths');
-var imageURL = require('../../images/yeoman.png');
 
 var Logo = require('../Logo/Logo');
 var GithubRibbon = require('./GithubRibbon');

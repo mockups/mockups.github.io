@@ -3,8 +3,9 @@
 var React = require('react/addons');
 var update = require('react/lib/update');
 var DragDropMixin = require('react-dnd').DragDropMixin;
+var ImagePreloaderMixin = require('react-dnd').ImagePreloaderMixin;
 var DropEffects = require('react-dnd').DropEffects;
-
+var MockupActions = require('../../actions/MockupActionCreators');
 var ObjectTypes = require('../../constants/ObjectTypes');
 
 require('./MockupItem.scss');
@@ -19,7 +20,7 @@ var dragSource = {
 };
 
 var Img = React.createClass({
-  mixins: [DragDropMixin],
+  mixins: [DragDropMixin, ImagePreloaderMixin],
 
   propTypes: {
     id: React.PropTypes.any.isRequired,
@@ -33,7 +34,8 @@ var Img = React.createClass({
         dragSource: {
           beginDrag(component) {
             return {
-              item: component.props
+              item: component.props,
+              dragPreview: component.getPreloadedImage(component.props.url)
             };
           }
         }
@@ -41,11 +43,20 @@ var Img = React.createClass({
     }
   },
 
+  getImageUrlsToPreload() {
+    return [this.props.url];
+  },
+
+  select() {
+    MockupActions.selectObject(this);
+  },
+
   render() {
-    var { left, top, children } = this.props;
+    var { left, top, children, url } = this.props;
 
     return (
-      <img className="MockupObject MockupImage" src={this.props.url} 
+      <img className="MockupObject MockupImage" src={url} 
+        onClick={this.select} 
         {...this.dragSourceFor(ObjectTypes.IMAGE)}
         style={{
           left,

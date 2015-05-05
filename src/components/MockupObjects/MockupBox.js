@@ -4,7 +4,7 @@ var React = require('react/addons');
 var update = require('react/lib/update');
 var DragDropMixin = require('react-dnd').DragDropMixin;
 var DropEffects = require('react-dnd').DropEffects;
-
+var MockupActions = require('../../actions/MockupActionCreators');
 var ObjectTypes = require('../../constants/ObjectTypes');
 
 require('./MockupItem.scss');
@@ -33,11 +33,17 @@ var Box = React.createClass({
     }
   },
 
+  select() {
+    MockupActions.selectObject(this);
+  },
+
   render() {
     var { left, top, children } = this.props;
 
     return (
-      <div className="MockupObject MockupBox" {...this.dragSourceFor(ObjectTypes.BOX)}
+      <div className="MockupObject MockupBox" 
+        onClick={this.select} 
+        {...this.dragSourceFor(ObjectTypes.BOX)} 
            style={{
               left,
               top

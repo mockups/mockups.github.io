@@ -23,7 +23,8 @@ function getAppState() {
     logged: DropboxStore.isLogged(),
     files: DropboxStore.files,
     mockups: MockupStore.getMockups(),
-    currentMockup: MockupStore.getCurrentMockup()
+    currentMockup: MockupStore.getCurrentMockup(),
+    selectedObject: MockupStore.getSelectedObject()
   };
 }
 

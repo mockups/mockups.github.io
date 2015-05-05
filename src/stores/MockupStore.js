@@ -14,6 +14,8 @@ var MockupStore = assign({}, EventEmitter.prototype, {
 
   currentMockup: undefined,
 
+  selectedObject: undefined,
+
   /**
    * Creates new mockup
    */
@@ -102,15 +104,32 @@ var MockupStore = assign({}, EventEmitter.prototype, {
   selectMockup(params) {
     if (this.currentMockup !== params.mockupId) {
       this.currentMockup = params.mockupId;
+      this.selectedObject = null;
       this.emitChange();
     }
   },
 
   /**
-   * Get currently edited mockup
+   * Returns currently edited mockup
    */
   getCurrentMockup() {
     return this.getMockup(this.currentMockup);
+  },
+
+  /**
+   * Returns currently selected object at mockup
+   */
+  getSelectedObject() {
+    return this.selectedObject;
+  },
+
+  /**
+   * Sets currently selected object
+   *
+   * @param {Object} object that will be counted as selected
+   */
+  selectObject(obj) {
+    this.selectedObject = obj;
   },
 
   /**
@@ -181,6 +200,10 @@ MockupStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
 
     case ActionTypes.MOCKUP_UPDATE:
     MockupStore.update(action.data);
+    break;
+
+    case ActionTypes.MOCKUP_SELECT_OBJECT:
+    MockupStore.selectObject(action.data);
     break;
 
     default:

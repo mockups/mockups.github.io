@@ -15,5 +15,6 @@ module.exports = keyMirror({
   MOCKUP_CREATE: null,                 // Creates mockup
   MOCKUP_RENAME: null,                 // Renames mockup
   MOCKUP_START_EDIT: null,             // Mockup has been opened for editing
-  MOCKUP_UPDATE: null                  // Mockup is being updated
+  MOCKUP_UPDATE: null,                 // Mockup is being updated
+  MOCKUP_SELECT_OBJECT: null           // Select object at mockup
 });

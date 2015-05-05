@@ -38,6 +38,13 @@ var MockupActionCreators = {
       type: ActionTypes.MOCKUP_START_EDIT,
       data: data
     });
+  },
+
+  selectObject: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.MOCKUP_SELECT_OBJECT,
+      data: data
+    });
   }
 
 };

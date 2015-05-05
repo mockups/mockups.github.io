@@ -96,7 +96,8 @@ var Container = React.createClass({
         data: {
           objects: this.state.objects
         }
-    })});
+      });
+    });
   },
 
   render() {

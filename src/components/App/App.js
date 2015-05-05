@@ -21,9 +21,9 @@ require('./App.scss');
 function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
-    mockups: MockupStore.getMockups(),
     files: DropboxStore.files,
-    currentMockup: MockupStore.currentMockup
+    mockups: MockupStore.getMockups(),
+    currentMockup: MockupStore.getCurrentMockup()
   };
 }
 

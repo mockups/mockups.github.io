@@ -12,7 +12,7 @@ var CHANGE_EVENT = 'change';
 
 var MockupStore = assign({}, EventEmitter.prototype, {
 
-  currentMockup: null,
+  currentMockup: undefined,
 
   /**
    * Creates new mockup
@@ -68,20 +68,20 @@ var MockupStore = assign({}, EventEmitter.prototype, {
   },
 
   /**
-   * Sets mockup as current by provided data
-   *
-   * @param (Object) params
-   * @param (String) params.mockupId Id of he mockup to set as current
+   * Find specific mockup among list of all mockups
+   * 
+   * @param {string} Id of desired mockup
+   * @return {Object} Mockup
    */
-  selectMockup(params) {
+  getMockup(mockupId) {
     var foundMockup = null;
 
-    if (params.mockupId) {
+    if (mockupId) {
       var mockups = this.getMockups();
       for (var i = 0; i < mockups.length; i++) {
         var mockup = mockups[i];
         var id = mockup.getId();
-        if (id === params.mockupId) {
+        if (id === mockupId) {
           foundMockup = mockup;
           break;
         }
@@ -89,9 +89,28 @@ var MockupStore = assign({}, EventEmitter.prototype, {
     }
 
     if (foundMockup !== this.currentMockup) {
-      this.currentMockup = foundMockup;
+      return foundMockup;
+    }
+  },
+
+  /**
+   * Sets mockup as current by provided data
+   *
+   * @param {Object} params
+   * @param {string} params.mockupId Id of he mockup to set as current
+   */
+  selectMockup(params) {
+    if (this.currentMockup !== params.mockupId) {
+      this.currentMockup = params.mockupId;
       this.emitChange();
     }
+  },
+
+  /**
+   * Get currently edited mockup
+   */
+  getCurrentMockup() {
+    return this.getMockup(this.currentMockup);
   },
 
   /**

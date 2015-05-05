@@ -6,10 +6,12 @@ var update = require('react/lib/update');
 var MockupActions = require('../../actions/MockupActionCreators');
 var RequireAuthMixin = require('../App/App').requireAuthMixin;
 var DragDropMixin = require('react-dnd').DragDropMixin;
+var ObjectTypes = require('../../constants/ObjectTypes');
 var MockupActions = require('../../actions/MockupActionCreators');
 var MockupPanel = require('./MockupPanel');
 var MockupContainer = require('./MockupContainer');
-var ObjectTypes = require('../../constants/ObjectTypes');
+var Loading = require('../Loading/Loading');
+
 
 require('./MockupEdit.scss');
 
@@ -44,17 +46,14 @@ var MockupEdit = React.createClass({
   getInitialState() {
     return {
       objectsPanel: { 
-        top: 20,
-        left: 0
+        top: 100,
+        left: 50
       }
     };
   },
 
-  componentDidUpdate() {
-    if (!this.props.currentMockups) {
-      var currentMockup = this.context.router.getCurrentParams();
-      MockupActions.startEdit(currentMockup);
-    }
+  componentDidMount() {
+    MockupActions.startEdit(this.context.router.getCurrentParams());
   },
 
   moveItem(item, relative) {
@@ -73,16 +72,21 @@ var MockupEdit = React.createClass({
   render() {
     var panelLeft = this.state.objectsPanel.left;
     var panelTop = this.state.objectsPanel.top;
-    var rawObjects = this.props.currentMockup ? this.props.currentMockup.get("objects") : "{}";
-    var objects = JSON.parse(rawObjects || "{}");
-    var mockupId = this.props.currentMockup ? this.props.currentMockup.getId() : "";
-
-    return (
-      <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit">
-        <MockupPanel files={this.props.files} left={panelLeft} top={panelTop} name="objectsPanel" />
-        <MockupContainer objects={objects} id={mockupId}/>
-      </div>
-    );
+    if (!this.props.currentMockup) {
+      return (
+        <Loading />
+      );
+    } else {
+      var rawObjects = this.props.currentMockup.get("objects");
+      var objects = JSON.parse(rawObjects || "{}");
+      var mockupId = this.props.currentMockup.getId();
+      return (
+        <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit">
+          <MockupPanel files={this.props.files} left={panelLeft} top={panelTop} name="objectsPanel" />
+          <MockupContainer objects={objects} id={mockupId}/>
+        </div>
+      );
+    }
   }
 
 });

@@ -5,7 +5,7 @@
 }
 
 .MockupPanel {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   z-index: $z_max;

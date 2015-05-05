@@ -45,7 +45,12 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
       return undefined;
     }
 
-    return client.isAuthenticated();
+    //return client.isAuthenticated();
+    if (client.isAuthenticated()) {
+      return datastore;
+    } else {
+      return false;
+    }
   },
 
   files: null,
@@ -87,7 +92,6 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
     client.authenticate(params, (error, data) => {
       triedToLogin = true;
-
       if (client.isAuthenticated()) {
         this.openDatastore();
         this.getFiles();

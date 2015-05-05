@@ -99,6 +99,7 @@ var MockupsApp = React.createClass({
                 <a href="#" onClick={this.logoutFromDropbox}>Logout</a>
               </li>
             </ul>
+            <GithubRibbon />
           </nav>
           : // User not logged
           <nav className="Nav">
@@ -110,9 +111,9 @@ var MockupsApp = React.createClass({
                 <Link to="dropbox-auth">Login</Link>
               </li>
             </ul>
+            <GithubRibbon />
           </nav>
         }
-        <GithubRibbon />
         <main className="Content">
           <ReactTransitionGroup transitionName="fade">
             <RouteHandler {...this.state} />

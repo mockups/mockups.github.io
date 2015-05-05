@@ -18,12 +18,6 @@ var dragSource = {
   }
 };
 
-var style = {
-  position: 'absolute',
-  border: '1px dashed gray',
-  padding: '0.5rem'
-};
-
 var Box = React.createClass({
   mixins: [DragDropMixin],
 
@@ -47,7 +41,8 @@ var Box = React.createClass({
            style={{
               left,
               top
-           }}>
+           }}
+      >
         {children}
       </div>
     );

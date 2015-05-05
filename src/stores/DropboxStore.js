@@ -6,7 +6,6 @@ var ActionTypes = require('../constants/ActionTypes');
 var Paths = require('../constants/Paths');
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
-var DropboxActions = require('../actions/DropboxActionCreators');
 
 var CHANGE_EVENT = 'change';
 
@@ -191,8 +190,6 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
           var changedMockups = event.affectedRecordsForTable('mockups');
           this.emitChange();
         });
-
-        DropboxActions.readyDatastore();
 
         this.emitChange();
     });

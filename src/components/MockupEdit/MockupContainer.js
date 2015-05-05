@@ -5,6 +5,7 @@ var update = require('react/lib/update');
 var DragDropMixin = require('react-dnd').DragDropMixin;
 
 var ObjectTypes = require('../../constants/ObjectTypes');
+var MockupActions = require('../../actions/MockupActionCreators');
 
 var Box = require('../MockupObjects/MockupBox');
 var Img = require('../MockupObjects/MockupImage');
@@ -38,14 +39,10 @@ var Container = React.createClass({
   mixins: [DragDropMixin],
 
   getInitialState() {
+    this.props.objects.boxes = this.props.objects.boxes || {};
+    this.props.objects.imgs = this.props.objects.imgs || {};
     return {
-      boxes: {
-        'a': { top: 20, left: 80, title: 'Drag me around' },
-        'b': { top: 180, left: 20, title: 'Drag me too' },
-      },
-      imgs: {
-        'c': { top: 180, left: 40, title: 'i am image!', url:'http://ponych.at/apple-touch-icon.png' }
-      }
+      objects: this.props.objects
     };
   },
 
@@ -67,7 +64,7 @@ var Container = React.createClass({
     var id = item.id;
     var left, top, method;
     // Item already at the container
-    if (this.state[type][id]) {
+    if (this.state.objects[type][id]) {
       method = "$merge";
       left = relative.x;
       top = relative.y;
@@ -79,21 +76,31 @@ var Container = React.createClass({
       left = total.x - containerOffset.left;
       top = total.y - containerOffset.top;
     }
-    this.setState(update(this.state, {
-      [type]: {
-        [id]: {
-          [method]: {
-            left: left,
-            top: top,
-            url: item.url
+    this.setState(
+      update(this.state, {
+        objects: {
+          [type]: {
+            [id]: {
+              [method]: {
+                left: left,
+                top: top,
+                url: item.url
+              }
+            }
           }
         }
-      }
-    }));
+      }), 
+      function() {
+      MockupActions.update({
+        id: this.props.id,
+        data: {
+          objects: this.state.objects
+        }
+    })});
   },
 
   render() {
-    var boxes = this.state.boxes;
+    var boxes = this.state.objects.boxes || {};
     var boxNodes = Object.keys(boxes).map(key => {
       var { left, top, title } = boxes[key];
 
@@ -107,7 +114,7 @@ var Container = React.createClass({
       );
     });
 
-    var imgs = this.state.imgs;
+    var imgs = this.state.objects.imgs || {};
     var imgNodes = Object.keys(imgs).map(key => {
       var { left, top, title, url } = imgs[key];
 
@@ -123,7 +130,7 @@ var Container = React.createClass({
     var supportedTypes = [ObjectTypes.BOX, ObjectTypes.IMAGE, ObjectTypes.PREVIEW];
 
     return (
-      <div {...this.dropTargetFor(...supportedTypes)} style={styles}>
+      <div {...this.dropTargetFor(...supportedTypes)} style={styles} className="MockupContainer">
         {boxNodes}
         {imgNodes}
       </div>

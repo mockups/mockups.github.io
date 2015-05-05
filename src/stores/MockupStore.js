@@ -21,7 +21,11 @@ var MockupStore = assign({}, EventEmitter.prototype, {
     DropboxStore.set({
       table: "mockups",
       data: {
-        name: "New mockup"
+        name: "New mockup",
+        objects: JSON.stringify({
+          boxes: {},
+          imgs: {}
+        })
       }
     });
   },
@@ -91,6 +95,21 @@ var MockupStore = assign({}, EventEmitter.prototype, {
   },
 
   /**
+   * Updates mockup with provided data
+   *
+   * @param {string} params.id Identifies mockup to be updated
+   * @param {string} params.data Data that will be written to mockup
+   */
+  update(params) {
+    console.log(params, JSON.stringify(params.data || "{}"));
+    DropboxStore.set({
+      table: "mockups",
+      query: params.id,
+      data: JSON.stringify(params.data || "{}")
+    });
+  },
+
+  /**
    * Emits change event to all registered event listeners.
    *
    * @returns {Boolean} Indication if we've emitted an event.
@@ -140,6 +159,10 @@ MockupStore.dispatchToken = MockupsAppDispatcher.register(function(payload) {
 
     case ActionTypes.MOCKUP_START_EDIT:
     MockupStore.selectMockup(action.data);
+    break;
+
+    case ActionTypes.MOCKUP_UPDATE:
+    MockupStore.update(action.data);
     break;
 
     default:

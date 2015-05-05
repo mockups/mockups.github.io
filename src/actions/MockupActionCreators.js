@@ -26,6 +26,13 @@ var MockupActionCreators = {
     });
   },
 
+  update: function(data) {
+    Dispatcher.handleAction({
+      type: ActionTypes.MOCKUP_UPDATE,
+      data: data
+    });
+  },
+
   startEdit: function(data) {
     Dispatcher.handleAction({
       type: ActionTypes.MOCKUP_START_EDIT,

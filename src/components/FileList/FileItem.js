@@ -41,6 +41,10 @@ var FileItem = React.createClass({
   },
 
   toggle: function(e){
+    if (this.props.data.type !== 'folder') {
+      return;
+    }
+
     this.setState({
       collapsed: !this.state.collapsed
     });
@@ -61,24 +65,28 @@ var FileItem = React.createClass({
     }
 
     return (
-      <li {...dragSource}>
-        { // If item is folder, it should be collapsable
-          isFolder ?
-            <span onClick={this.toggle}>
-              {
-                this.state.collapsed ? "[+]" : "[-]"
-              }
-            </span> : ""
-        }
-        { // If item has a thumbnail -- display it
-          thumbnail ?
-            <img src={thumbnail} alt={this.props.data.path}/> : ""
-        }
-        <span>{this.props.data.name}</span>
-        { // If item is folder and isn't collapsed, display it's children
-          isFolder && !this.state.collapsed ?
-            <ul>{nodes}</ul> : ""
-        }
+      <li {...dragSource} className="FileList__Node">
+        <span className="FileList__Label" onClick={this.toggle}>
+          { // If item is folder, it should be collapsable
+            isFolder ?
+              <span>
+                {
+                  this.state.collapsed ? 
+                    <i className="fa fa-folder-o FileList__Preview"></i> :
+                    <i className="fa fa-folder-open-o FileList__Preview"></i>
+                }
+              </span> :
+            // If item has a thumbnail -- display it
+              thumbnail ?
+                <img src={thumbnail} className="FileList__Preview" alt={this.props.data.path}/> :
+                <i className="fa fa-file-text-o FileList__Preview"></i>
+          }
+          <span>{this.props.data.name}</span>
+        </span>
+          { // If item is folder and isn't collapsed, display it's children
+            isFolder && !this.state.collapsed ?
+              <ul className="FileList__Level">{nodes}</ul> : ""
+          }
       </li>
     );
   }

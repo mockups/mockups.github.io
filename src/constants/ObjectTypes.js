@@ -3,5 +3,6 @@
 export default {
   BOX: 'box',
   IMAGE: 'image',
-  PREVIEW: 'preview'
+  PREVIEW: 'preview',
+  PANEL: 'panel'
 };

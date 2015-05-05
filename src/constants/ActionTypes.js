@@ -14,5 +14,6 @@ module.exports = keyMirror({
   DROPBOX_DATASTORE_READY: null,       // Datastore ready for queries
   MOCKUP_CREATE: null,                 // Creates mockup
   MOCKUP_RENAME: null,                 // Renames mockup
-  MOCKUP_START_EDIT: null              // Mockup has been opened for editing
+  MOCKUP_START_EDIT: null,             // Mockup has been opened for editing
+  MOCKUP_UPDATE: null                  // Mockup is being updated
 });

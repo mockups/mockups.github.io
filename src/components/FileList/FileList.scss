@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.FileList {
+  &__Header {
+    font-size: $font_size__header;
+    margin-bottom: 0.5em;
+  }
+
+  &__Wrapper {
+    max-height: $restrict__file_list;
+    overflow-y: auto;
+  }
+
+  &__Level {
+    margin-left: 1em;
+  }
+
+  &__Preview {
+    margin-right: 0.3em;
+  }
+
+  &__Node {
+    cursor: pointer;
+    margin: 0.5em 0;
+  }
+
+  &__Label {
+    white-space: nowrap;
+    &:hover {
+      color: $color__secondary;
+    }
+  }
+}

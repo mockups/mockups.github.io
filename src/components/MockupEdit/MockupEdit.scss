@@ -1,11 +1,31 @@
-@import "variables";
+@import '../../styles/variables';
 
 .MockupEdit {
-	// Checker board background
-	// Credits: http://lea.verou.me/css3patterns/#checkerboard
-	background-color: $color__background;
-	background-image: linear-gradient(45deg, $color__background_checker 25%, transparent 25%, transparent 75%, $color__background_checker 75%, $color__background_checker), 
-	linear-gradient(45deg, $color__background_checker 25%, transparent 25%, transparent 75%, $color__background_checker 75%, $color__background_checker);
-	background-size:30px 30px;
-	background-position:0 0, 15px 15px
+  position: relative;
+}
+
+.MockupPanel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $z_max;
+
+  background: $color__background;
+  box-shadow: 0px 3px 5px 0px $color__shade;
+  border: 1px solid $color__border;
+  padding: 1em;
+}
+
+.MockupContainer {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+
+  // Checker board background
+  // Credits: http://lea.verou.me/css3patterns/#checkerboard
+  background-color: $color__background;
+  background-image: linear-gradient(45deg, $color__background_checker 25%, transparent 25%, transparent 75%, $color__background_checker 75%, $color__background_checker), 
+  linear-gradient(45deg, $color__background_checker 25%, transparent 25%, transparent 75%, $color__background_checker 75%, $color__background_checker);
+  background-size:30px 30px;
+  background-position:0 0, 15px 15px
 }

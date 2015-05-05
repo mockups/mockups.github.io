@@ -120,11 +120,10 @@ var MockupStore = assign({}, EventEmitter.prototype, {
    * @param {string} params.data Data that will be written to mockup
    */
   update(params) {
-    console.log(params, JSON.stringify(params.data || "{}"));
     DropboxStore.set({
       table: "mockups",
       query: params.id,
-      data: JSON.stringify(params.data || "{}")
+      data: params.data
     });
   },
 

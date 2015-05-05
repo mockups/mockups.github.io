@@ -80,6 +80,7 @@ var MockupEdit = React.createClass({
       var rawObjects = this.props.currentMockup.get("objects");
       var objects = JSON.parse(rawObjects || "{}");
       var mockupId = this.props.currentMockup.getId();
+
       return (
         <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit">
           <MockupPanel files={this.props.files} left={panelLeft} top={panelTop} name="objectsPanel" />

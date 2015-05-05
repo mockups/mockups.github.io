@@ -94,7 +94,7 @@ var Container = React.createClass({
       MockupActions.update({
         id: this.props.id,
         data: {
-          objects: this.state.objects
+          objects: JSON.stringify(this.state.objects)
         }
       });
     });

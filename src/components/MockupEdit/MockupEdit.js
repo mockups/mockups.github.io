@@ -84,7 +84,7 @@ var MockupEdit = React.createClass({
       return (
         <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit">
           <MockupPanel files={this.props.files} left={panelLeft} top={panelTop} name="objectsPanel" />
-          <MockupContainer objects={objects} id={mockupId}/>
+          <MockupContainer imageMap={this.props.imageMap} objects={objects} id={mockupId}/>
         </div>
       );
     }

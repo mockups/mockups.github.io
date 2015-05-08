@@ -15,8 +15,8 @@ function makeDropTarget(context, type) {
     acceptDrop: function(component, item) {
       var clientOffset = context.getCurrentOffsetFromClient();
       var totalOffset = {
-        x: Math.round(document.body.scrollLeft + clientOffset.x),
-        y: Math.round(document.body.scrollTop + clientOffset.y)
+        x: Math.round(clientOffset.x),
+        y: Math.round(clientOffset.y)
       };
       var delta = context.getCurrentOffsetDelta();
       var relativeOffset = {
@@ -84,7 +84,7 @@ var Container = React.createClass({
               [method]: {
                 left: left,
                 top: top,
-                url: item.url
+                path: item.path
               }
             }
           }
@@ -118,13 +118,15 @@ var Container = React.createClass({
 
     var imgs = this.state.objects.imgs || {};
     var imgNodes = Object.keys(imgs).map(key => {
-      var { left, top, title, url } = imgs[key];
+      var { left, top, title, path } = imgs[key];
+      var url = this.props.imageMap[path];
 
       return (
         <Img key={key}
              id={key}
              left={left}
              top={top}
+             path={path}
              url={url} />
       );
     });

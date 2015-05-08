@@ -22,6 +22,7 @@ function getAppState() {
   return {
     logged: DropboxStore.isLogged(),
     files: DropboxStore.files,
+    imageMap: DropboxStore.imageMap,
     mockups: MockupStore.getMockups(),
     currentMockup: MockupStore.getCurrentMockup(),
     selectedObject: MockupStore.getSelectedObject()
@@ -65,9 +66,7 @@ var MockupsApp = React.createClass({
       this.context.router.replaceWith("dropbox-auth");
     }
 
-    if (logged &&
-        !(files && files.length) &&
-        !(mockups && mockups.length) ) {
+    if ( logged && !(files && files.length) ) {
       this.context.router.replaceWith("initial-setup");
     }
   },

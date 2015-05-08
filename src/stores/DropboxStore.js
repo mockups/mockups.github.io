@@ -17,7 +17,7 @@ client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin
 }));
 var triedToLogin = false;
-var demoFiles = require('../constants/Demo');
+var demoData = require('../constants/Demo');
 
 // Datatables
 var datastore = null;
@@ -45,6 +45,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
   },
 
   files: null,
+
+  imageMap: {},
 
   /**
    * Checks if folder with provided path already exists
@@ -206,36 +208,40 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     var i = 0;
 
     // Function to upload file
-    var uploadFile = function(path, data, tryNum) {
-      client.writeFile(path, data, {}, function () {
-        i++; 
-        if (i >= demoFiles.length) {
-          DropboxStore.getFiles();
-        }
+    var uploadFile = function(path, data, callback, tryNum) {
+      tryNum = tryNum || 0;
+      client.writeFile(path, data, {}, function (error, stat) {
         // Make sure item sucessfuly uploaded
-        tryNum = tryNum || 1;
-        client.stat(path, {}, function(data, error) {
-          if (error && tryNum < 10) {
-            client.uploadFile();
-          }
-        });
+        if (error && tryNum < 10) {
+          uploadFile(path, data, callback, tryNum + 1);
+        } else {
+          i++;
+        }
+
+        if (i === demoData.files.length) {
+          callback();
+        }
+      });
+    };
+
+    var finishUpload = function() {
+      DropboxStore.getFiles();
+
+      // Create demo mockup
+      DropboxStore.set({
+        table: "mockups",
+        data: {
+          name: "Demo mockup",
+          objects: demoData.mockup
+        }
       });
     };
 
     // Upload demo files
-    demoFiles.files.map(function(file) {
+    demoData.files.map(function(file) {
       getDemoFile(file, function(blob) {
-        uploadFile(file.path, blob);
+        uploadFile(file.path, blob, finishUpload);
       });
-    });
-
-    // Create demo mockup
-    this.set({
-      table: "mockups",
-      data: {
-        name: "Demo mockup",
-        objects: demoFiles.mockup
-      }
     });
   },
 
@@ -328,7 +334,8 @@ var getFolderFiles = function(path, dir) {
           file.isImage = true;
           client.makeUrl(file.path, {download: true}, function(error, data) {
             if (data && !error) {
-              file.url = data.url;
+              DropboxStore.imageMap[file.path] = data.url;
+              DropboxStore.emitChange();
             }
           });
         }

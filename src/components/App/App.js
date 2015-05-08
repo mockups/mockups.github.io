@@ -89,9 +89,9 @@ var MockupsApp = React.createClass({
             <div className="Nav__Item Nav__Item--prior">
               <Logo type="small"/>
             </div>
-            <div className="Nav__Item Nav__Mockup_Name Nav__Item--prior">
+            <h2 className="Nav__Item Nav__Mockup_Name Nav__Item--prior">
               {this.state.currentMockup ? this.state.currentMockup.get("name") : ""}
-            </div>
+            </h2>
             <ul className="Nav__Item">
               <li className="Nav__Item">
                 <Link to="mockup-list">List of mockups</Link>

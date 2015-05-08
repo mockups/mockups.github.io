@@ -37,7 +37,7 @@ var InitialSetup = React.createClass({
   render() {
     return (
       <div className="InitialSetup">
-        <p>Providing demo mockup...</p>
+        <h1 className="is-centered">Providing demo mockup...</h1>
         <Loading />
       </div>
     );

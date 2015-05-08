@@ -49,6 +49,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     if (client.isAuthenticated()) {
       return datastore;
     } else {
+      client.reset();
       return false;
     }
   },
@@ -92,7 +93,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
     client.authenticate(params, (error, data) => {
       triedToLogin = true;
-      if (client.isAuthenticated()) {
+
+      if (!error && client.isAuthenticated()) {
         this.openDatastore();
         this.getFiles();
       } else {
@@ -183,6 +185,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     datastoreManager.openDefaultDatastore( (error, defaultDatastore) => {
         if (error) {
             console.log('Error opening default datastore: ' + error);
+            client.reset();
+            this.emitChange();
             return;
         }
 
@@ -211,15 +215,27 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
 
     var i = 0;
 
+    // Function to upload file
+    var uploadFile = function(path, data, tryNum) {
+      client.writeFile(path, data, {}, function () {
+        i++; 
+        if (i >= demoFiles.length) {
+          DropboxStore.getFiles();
+        }
+        // Make sure item sucessfuly uploaded
+        tryNum = tryNum || 1;
+        client.stat(path, {}, function(data, error) {
+          if (error && tryNum < 10) {
+            client.uploadFile();
+          }
+        });
+      });
+    };
+
     // Upload demo files
     demoFiles.map(function(file) {
       getDemoFile(file, function(blob) {
-        client.writeFile(file.path, blob, {}, function () {
-          i++; 
-          if (i >= demoFiles.length) {
-            DropboxStore.getFiles();
-          }
-        });
+        uploadFile(file.path, blob);
       });
     });
 

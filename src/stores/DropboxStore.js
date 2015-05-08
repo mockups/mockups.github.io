@@ -200,8 +200,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     var mockups = this.find({table: "mockups"});
 
     if (!datastore || 
-        (files && files.length &&
-         mockups && mockups.length) ) {
+        (files && files.length) ||
+        (mockups && mockups.length) ) {
       return;
     }
 

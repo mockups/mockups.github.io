@@ -21,9 +21,9 @@ var FileList = React.createClass({
 
     return (
       <div className="FileList">
-        <div className="FileList__Header">
-          Available files:
-        </div>
+        <h2 className="FileList__Header">
+          Available files
+        </h2>
         <ul className="FileList__Wrapper">
           {items}
         </ul>

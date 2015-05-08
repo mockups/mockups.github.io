@@ -1,11 +1,6 @@
 @import '../../styles/variables';
 
 .FileList {
-  &__Header {
-    font-size: $font_size__header;
-    margin-bottom: 0.5em;
-  }
-
   &__Wrapper {
     max-height: $restrict__file_list;
     overflow-y: auto;

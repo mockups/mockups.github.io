@@ -47,16 +47,13 @@ var Img = React.createClass({
     return [this.props.url];
   },
 
-  select() {
-    MockupActions.selectObject(this);
-  },
-
   render() {
     var { left, top, children, url } = this.props;
+    var selectHandler = () => { this.props.selectHandler(this.props); };
 
     return (
       <img className="MockupObject MockupImage" src={url} 
-        onClick={this.select} 
+        onClick={selectHandler}  
         {...this.dragSourceFor(ObjectTypes.IMAGE)}
         style={{
           left,

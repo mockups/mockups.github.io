@@ -1,7 +1,10 @@
 'use strict';
 
 var React = require('react/addons');
+
 var FileList = require('../FileList/FileList');
+var MockupProperties = require('./MockupProperties');
+
 var DragDropMixin = require('react-dnd').DragDropMixin;
 var ObjectTypes = require('../../constants/ObjectTypes');
 var DropEffects = require('react-dnd').DropEffects;
@@ -34,7 +37,8 @@ var Container = React.createClass({
           top
         }}
       >
-        <FileList files={this.props.files}/>
+        <FileList files={this.props.files} />
+        <MockupProperties object={this.props.selectedObject}/>
       </div>
     );
   }

@@ -126,10 +126,15 @@ var MockupStore = assign({}, EventEmitter.prototype, {
   /**
    * Sets currently selected object
    *
-   * @param {Object} object that will be counted as selected
+   * @param {Object} params.object object that will be counted as selected
+   * @param {function} a method to update object params
    */
-  selectObject(obj) {
-    this.selectedObject = obj;
+  selectObject(params) {
+    this.selectedObject = {
+      data: params.object,
+      update: params.update
+    };
+    this.emitChange();
   },
 
   /**

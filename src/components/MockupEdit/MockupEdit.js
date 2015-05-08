@@ -80,10 +80,16 @@ var MockupEdit = React.createClass({
       var rawObjects = this.props.currentMockup.get("objects");
       var objects = JSON.parse(rawObjects || "{}");
       var mockupId = this.props.currentMockup.getId();
+      var clearSelect = (e) => {
+        if (e.target === this.getDOMNode()) {
+          MockupActions.selectObject(null);
+        }
+      };
 
       return (
-        <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit">
-          <MockupPanel files={this.props.files} left={panelLeft} top={panelTop} name="objectsPanel" />
+        <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit" onClick={clearSelect}>
+          <p className="is-centered">Drag images to canvas from list of available files. Click on object at canvas to edit.</p>
+          <MockupPanel files={this.props.files} selectedObject={this.props.selectedObject} left={panelLeft} top={panelTop} name="objectsPanel" />
           <MockupContainer imageMap={this.props.imageMap} objects={objects} id={mockupId}/>
         </div>
       );

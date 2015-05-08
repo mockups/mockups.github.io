@@ -113,9 +113,7 @@ var Container = React.createClass({
         // Delete an object from mockup
         if (param === 'remove') {
           var newState = this.state;
-          console.log(newState);
           delete newState.objects[object.type][object.id];
-          console.log(newState);
           this.setState(newState, this.save);
           return;
         }

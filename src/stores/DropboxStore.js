@@ -7,6 +7,7 @@ var Paths = require('../constants/Paths');
 var assign = require('object-assign');
 var MockupsAppDispatcher = require('../dispatcher/MockupsAppDispatcher');
 
+
 var CHANGE_EVENT = 'change';
 
 // Dropbox setup
@@ -16,22 +17,11 @@ client.authDriver(new Dropbox.AuthDriver.Popup({
   receiverUrl: window.location.origin
 }));
 var triedToLogin = false;
+var demoFiles = require('../constants/Demo');
 
 // Datatables
 var datastore = null;
 var tables = {};
-var demoFiles = [
-  {
-    url: "/demo/image.png",
-    path: "/images/image.png",
-    type: "image/png"
-  }, 
-  {
-    url: "/demo/text.txt",
-    path: "/text.txt",
-    type: "text/plain"
-  }
-];
 
 var DropboxStore = assign({}, EventEmitter.prototype, {
 
@@ -233,7 +223,7 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     };
 
     // Upload demo files
-    demoFiles.map(function(file) {
+    demoFiles.files.map(function(file) {
       getDemoFile(file, function(blob) {
         uploadFile(file.path, blob);
       });
@@ -243,7 +233,8 @@ var DropboxStore = assign({}, EventEmitter.prototype, {
     this.set({
       table: "mockups",
       data: {
-        name: "Demo mockup"
+        name: "Demo mockup",
+        objects: demoFiles.mockup
       }
     });
   },

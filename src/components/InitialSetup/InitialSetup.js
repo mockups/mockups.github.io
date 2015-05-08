@@ -26,7 +26,6 @@ var InitialSetup = React.createClass({
   proceed() {
     var files = this.props.files;
     var mockups = this.props.mockups;
-
     if (files && files.length && mockups && mockups.length) {
       this.context.router.replaceWith("mockup-list");
     }

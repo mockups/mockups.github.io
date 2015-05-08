@@ -36,7 +36,7 @@ var FileItem = React.createClass({
 
   getInitialState() {
     return {
-      collapsed: false
+      collapsed: this.props.collapsed
     };
   },
 
@@ -60,7 +60,7 @@ var FileItem = React.createClass({
     if (children) {
       nodes = children.map(function(node) {
         var FileList = require('./FileList');
-        return <FileItem key={node.path} data={node} />;
+        return <FileItem key={node.path} data={node} collapsed={true}/>;
       });
     }
 

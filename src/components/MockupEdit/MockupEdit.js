@@ -90,7 +90,7 @@ var MockupEdit = React.createClass({
         <div {...this.dropTargetFor(ObjectTypes.PANEL)} className="MockupEdit" onClick={clearSelect}>
           <p className="is-centered">Drag images to canvas from list of available files. Click on object at canvas to edit.</p>
           <MockupPanel files={this.props.files} selectedObject={this.props.selectedObject} left={panelLeft} top={panelTop} name="objectsPanel" />
-          <MockupContainer imageMap={this.props.imageMap} objects={objects} id={mockupId}/>
+          <MockupContainer imageMap={this.props.imageMap} objects={objects} selectedObject={this.props.selectedObject} id={mockupId}/>
         </div>
       );
     }

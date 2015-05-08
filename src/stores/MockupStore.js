@@ -130,6 +130,7 @@ var MockupStore = assign({}, EventEmitter.prototype, {
    * @param {function} a method to update object params
    */
   selectObject(params) {
+    params = params || {object: {}, update: null};
     this.selectedObject = {
       data: params.object,
       update: params.update

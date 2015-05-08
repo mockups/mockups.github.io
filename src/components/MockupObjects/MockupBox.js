@@ -36,9 +36,10 @@ var Box = React.createClass({
   render() {
     var { left, top, children } = this.props;
     var selectHandler = () => { this.props.selectHandler(this.props); };
+    var selectedClass = this.props.selected ? "MockupObject--selected" : "";
 
     return (
-      <div className="MockupObject MockupBox" 
+      <div className={"MockupObject MockupBox " + selectedClass}
         onClick={selectHandler} 
         {...this.dragSourceFor(ObjectTypes.BOX)} 
            style={{

@@ -41,7 +41,8 @@ var Container = React.createClass({
     this.props.objects.boxes = this.props.objects.boxes || {};
     this.props.objects.imgs = this.props.objects.imgs || {};
     this.props.objects.canvas = this.props.canvas || {
-      style: defaultStyle
+      style: defaultStyle,
+      type: "canvas"
     };
     return {
       objects: this.props.objects
@@ -155,6 +156,7 @@ var Container = React.createClass({
 
   render() {
     var boxes = this.state.objects.boxes || {};
+    var selected = this.props.selectedObject ? this.props.selectedObject.data : {};
     var boxNodes = Object.keys(boxes).map(key => {
       var box = boxes[key];
       var { left, top, title } = boxes[key];
@@ -166,6 +168,7 @@ var Container = React.createClass({
              left={left}
              top={top}
              type="boxes"
+             selected = { selected.id === key }
              selectHandler={selectHandler} >
           {title}
         </Box>
@@ -186,12 +189,14 @@ var Container = React.createClass({
              path={path}
              url={url}
              type="imgs"
+             selected = { selected.id === key }
              selectHandler={selectHandler}/>
       );
     });
 
     var supportedTypes = [ObjectTypes.BOX, ObjectTypes.IMAGE, ObjectTypes.PREVIEW];
     var canvasStyle = this.state.objects.canvas.style;
+    var selectedClass = selected.type === "canvas" ? "MockupContainer--selected" : "";
     var select = (e) => {
       if (e.target === this.getDOMNode()) {
         this.select(this.state.objects.canvas);
@@ -199,7 +204,7 @@ var Container = React.createClass({
     };
 
     return (
-      <div {...this.dropTargetFor(...supportedTypes)} style={canvasStyle} className="MockupContainer" onClick={select}>
+      <div {...this.dropTargetFor(...supportedTypes)} style={canvasStyle} className={"MockupContainer " + selectedClass} onClick={select}>
         {boxNodes}
         {imgNodes}
       </div>

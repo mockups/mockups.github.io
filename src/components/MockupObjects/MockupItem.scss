@@ -2,11 +2,16 @@
 
 .MockupObject {
   position: absolute;
-  border: 1px dashed;
-  border-color: transparent;
 
   &:hover {
-    border-color: $color__border;
+    outline: 1px dashed $color__border;
     cursor: pointer;
+  }
+
+  &--selected {
+    &, &:hover {
+      outline: 8px dashed $color__secondary;
+      border-color: transparent;
+    }
   }
 }

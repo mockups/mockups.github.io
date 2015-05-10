@@ -9,6 +9,11 @@
   left: 0;
   top: 0;
   z-index: $z_max;
+
+  max-height: 70%;
+  overflow: hidden;
+  overflow-y: auto;
+
   cursor: move;
 
   background: $color__background;
@@ -31,6 +36,6 @@
   background-position:0 0, 15px 15px;
 
   &--selected {
-    outline: 8px dashed $color__secondary;
+    outline: $border__select;
   }
 }

@@ -1,0 +1,15 @@
+@import '../../styles/variables';
+
+.Properties {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid $color__border;
+
+  &__Title {
+    margin: 0;
+  }
+
+  &__Control {
+    margin-top: 0.5em;
+  }
+}

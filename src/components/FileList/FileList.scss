@@ -3,7 +3,9 @@
 .FileList {
   &__Wrapper {
     max-height: $restrict__file_list;
+    overflow: hidden;
     overflow-y: auto;
+    padding-right: 1em;
   }
 
   &__Level {
@@ -17,6 +19,10 @@
   &__Node {
     cursor: pointer;
     margin: 0.5em 0;
+  }
+
+  &__Header {
+    margin: 0;
   }
 
   &__Label {

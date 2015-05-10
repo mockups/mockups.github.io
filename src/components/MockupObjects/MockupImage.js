@@ -26,6 +26,7 @@ var Img = React.createClass({
     id: React.PropTypes.any.isRequired,
     left: React.PropTypes.number.isRequired,
     top: React.PropTypes.number.isRequired,
+    styles: React.PropTypes.string
   },
 
   statics: {
@@ -47,19 +48,24 @@ var Img = React.createClass({
     return [this.props.url];
   },
 
+  componentDidUpdate(prevProp, prevState) {
+    var node = React.findDOMNode(this.refs.image);
+    node.setAttribute("style", node.getAttribute("style") + this.props.styles);
+  },
+
   render() {
-    var { left, top, children, url } = this.props;
+    var { left, top, styles, url } = this.props;
     var selectHandler = () => { this.props.selectHandler(this.props); };
     var selectedClass = this.props.selected ? "MockupObject--selected" : "";
 
     return (
-      <img className={"MockupObject MockupImage " + selectedClass} src={url} 
+      <img ref="image" className={"MockupObject MockupImage " + selectedClass} src={url} 
         onClick={selectHandler}  
         {...this.dragSourceFor(ObjectTypes.IMAGE)}
         style={{
-          left,
-          top
-        }} 
+          top,
+          left
+        }}
       />
     );
   }

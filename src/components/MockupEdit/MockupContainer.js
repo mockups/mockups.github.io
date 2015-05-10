@@ -31,7 +31,8 @@ function makeDropTarget(context, type) {
 
 var defaultStyle = {
   width: 1300,
-  height: 600
+  height: 600,
+  styles: ""
 };
 
 var Container = React.createClass({
@@ -40,7 +41,7 @@ var Container = React.createClass({
   getInitialState() {
     this.props.objects.boxes = this.props.objects.boxes || {};
     this.props.objects.imgs = this.props.objects.imgs || {};
-    this.props.objects.canvas = this.props.canvas || {
+    this.props.objects.canvas = this.props.objects.canvas || {
       style: defaultStyle,
       type: "canvas"
     };
@@ -74,19 +75,21 @@ var Container = React.createClass({
 
   moveObject(item, type, total, relative) {
     var id = item.id;
-    var left, top, method;
+    var left, top, styles, method;
     // Item already at the container
     if (this.state.objects[type][id]) {
       method = "$merge";
       left = relative.x;
       top = relative.y;
+      styles = item.styles;
     } else { // New item has been dragged
       method = "$set";
-      id = _.uniqueId('object_');
+      id = _.uniqueId('object_') + Math.random();
       var container = this.getDOMNode();
       var containerOffset = container.getBoundingClientRect();
       left = total.x - containerOffset.left;
       top = total.y - containerOffset.top;
+      styles = "z-index: 0;";
     }
     this.setState(
       update(this.state, {
@@ -96,6 +99,7 @@ var Container = React.createClass({
               [method]: {
                 left: left,
                 top: top,
+                styles: styles,
                 path: item.path
               }
             }
@@ -157,7 +161,7 @@ var Container = React.createClass({
     var selected = this.props.selectedObject ? this.props.selectedObject.data : {};
     var boxNodes = Object.keys(boxes).map(key => {
       var box = boxes[key];
-      var { left, top, title } = boxes[key];
+      var { left, top, styles, title } = boxes[key];
       var selectHandler = this.select;
 
       return (
@@ -165,6 +169,7 @@ var Container = React.createClass({
              id={key}
              left={left}
              top={top}
+             styles={styles}
              type="boxes"
              selected = { selected.id === key }
              selectHandler={selectHandler} >
@@ -175,7 +180,7 @@ var Container = React.createClass({
 
     var imgs = this.state.objects.imgs || {};
     var imgNodes = Object.keys(imgs).map(key => {
-      var { left, top, title, path } = imgs[key];
+      var { left, top, styles, title, path } = imgs[key];
       var url = this.props.imageMap[path];
       var selectHandler = this.select;
 
@@ -184,6 +189,7 @@ var Container = React.createClass({
              id={key}
              left={left}
              top={top}
+             styles={styles}
              path={path}
              url={url}
              type="imgs"

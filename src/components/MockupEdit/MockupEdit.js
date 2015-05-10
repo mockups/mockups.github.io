@@ -12,7 +12,6 @@ var MockupPanel = require('./MockupPanel');
 var MockupContainer = require('./MockupContainer');
 var Loading = require('../Loading/Loading');
 
-
 require('./MockupEdit.scss');
 
 function makeDropTarget(context, type) {

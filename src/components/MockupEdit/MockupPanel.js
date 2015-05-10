@@ -3,7 +3,7 @@
 var React = require('react/addons');
 
 var FileList = require('../FileList/FileList');
-var MockupProperties = require('./MockupProperties');
+var Properties = require('../Properties/Properties');
 
 var DragDropMixin = require('react-dnd').DragDropMixin;
 var ObjectTypes = require('../../constants/ObjectTypes');
@@ -38,7 +38,7 @@ var Container = React.createClass({
         }}
       >
         <FileList files={this.props.files} />
-        <MockupProperties object={this.props.selectedObject}/>
+        <Properties object={this.props.selectedObject}/>
       </div>
     );
   }

@@ -25,6 +25,7 @@ var Box = React.createClass({
     id: React.PropTypes.any.isRequired,
     left: React.PropTypes.number.isRequired,
     top: React.PropTypes.number.isRequired,
+    styles: React.PropTypes.string
   },
 
   statics: {
@@ -34,7 +35,7 @@ var Box = React.createClass({
   },
 
   render() {
-    var { left, top, children } = this.props;
+    var { left, top, styles, children } = this.props;
     var selectHandler = () => { this.props.selectHandler(this.props); };
     var selectedClass = this.props.selected ? "MockupObject--selected" : "";
 
@@ -44,7 +45,8 @@ var Box = React.createClass({
         {...this.dragSourceFor(ObjectTypes.BOX)} 
            style={{
               left,
-              top
+              top,
+              styles
            }}
       >
         {children}

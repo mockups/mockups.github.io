@@ -10,7 +10,7 @@
 
   &--selected {
     &, &:hover {
-      outline: 8px dashed $color__secondary;
+      outline: $border__select;
       border-color: transparent;
     }
   }

@@ -48,7 +48,7 @@ var Img = React.createClass({
     return [this.props.url];
   },
 
-  componentDidUpdate(prevProp, prevState) {
+  componentDidUpdate() {
     var node = React.findDOMNode(this.refs.image);
     node.setAttribute("style", node.getAttribute("style") + this.props.styles);
   },

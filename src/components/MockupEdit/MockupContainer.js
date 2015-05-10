@@ -29,11 +29,8 @@ function makeDropTarget(context, type) {
   };
 }
 
-var defaultStyle = {
-  width: 1300,
-  height: 600,
-  styles: ""
-};
+var defaultStyle = "width: 640px; \
+height: 480px;";
 
 var Container = React.createClass({
   mixins: [DragDropMixin],
@@ -42,7 +39,7 @@ var Container = React.createClass({
     this.props.objects.boxes = this.props.objects.boxes || {};
     this.props.objects.imgs = this.props.objects.imgs || {};
     this.props.objects.canvas = this.props.objects.canvas || {
-      style: defaultStyle,
+      styles: defaultStyle,
       type: "canvas"
     };
     return {
@@ -62,6 +59,19 @@ var Container = React.createClass({
         dropTarget: makeDropTarget(context, 'imgs')
       });
     }
+  },
+
+  componentDidMount() {
+    this.updateStyle();
+  },
+
+  componentDidUpdate() {
+    this.updateStyle();
+  },
+
+  updateStyle() {
+    var node = React.findDOMNode(this.refs.canvas);
+    node.setAttribute("style", (node.getAttribute("style") || "") + this.state.objects.canvas.styles);
   },
 
   save() {
@@ -199,7 +209,6 @@ var Container = React.createClass({
     });
 
     var supportedTypes = [ObjectTypes.BOX, ObjectTypes.IMAGE, ObjectTypes.PREVIEW];
-    var canvasStyle = this.state.objects.canvas.style;
     var selectedClass = selected.type === "canvas" ? "MockupContainer--selected" : "";
     var select = (e) => {
       if (e.target === this.getDOMNode()) {
@@ -208,7 +217,7 @@ var Container = React.createClass({
     };
 
     return (
-      <div {...this.dropTargetFor(...supportedTypes)} style={canvasStyle} className={"MockupContainer " + selectedClass} onClick={select}>
+      <div {...this.dropTargetFor(...supportedTypes)} ref="canvas" className={"MockupContainer " + selectedClass} onClick={select}>
         {boxNodes}
         {imgNodes}
       </div>

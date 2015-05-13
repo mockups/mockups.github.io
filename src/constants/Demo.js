@@ -5,78 +5,78 @@ module.exports = {
   files: [
     // Site
     {
-      url: "demo/site/auth/mockup.png",
+      url: "dist/demo/site/auth/mockup.png",
       path: "/Demo Site/Auth/mockup.png",
       type: "image/png"
     }, 
     {
-      url: "demo/site/auth/login_button/login_button.png",
+      url: "dist/demo/site/auth/login_button/login_button.png",
       path: "/Demo Site/Auth/Login button/Login button.png",
       type: "image/png"
     }, 
     // Theme
       // Palette
     {
-      url: "demo/theme/palette/accent.png",
+      url: "dist/demo/theme/palette/accent.png",
       path: "/Demo Theme/Palette/Accent.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/palette/text.png",
+      url: "dist/demo/theme/palette/text.png",
       path: "/Demo Theme/Palette/Text.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/palette/background.png",
+      url: "dist/demo/theme/palette/background.png",
       path: "/Demo Theme/Palette/Background.png",
       type: "image/png"
     },
       // Icons
     {
-      url: "demo/theme/icons/logo--small.png",
+      url: "dist/demo/theme/icons/logo--small.png",
       path: "/Demo Theme/Icons/Logo small.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/icons/logo--big.png",
+      url: "dist/demo/theme/icons/logo--big.png",
       path: "/Demo Theme/Icons/Logo big.png",
       type: "image/png"
     },
       // Typography
     {
-      url: "demo/theme/typography/headers/header1.png",
+      url: "dist/demo/theme/typography/headers/header1.png",
       path: "/Demo Theme/Typography/Headers/Header 1.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/typography/headers/header2.png",
+      url: "dist/demo/theme/typography/headers/header2.png",
       path: "/Demo Theme/Typography/Headers/Header 2.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/typography/links/link.png",
+      url: "dist/demo/theme/typography/links/link.png",
       path: "/Demo Theme/Typography/Links/Link general.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/typography/text/text.png",
+      url: "dist/demo/theme/typography/text/text.png",
       path: "/Demo Theme/Typography/Text/Text.png",
       type: "image/png"
     },
       // Buttons
     {
-      url: "demo/theme/buttons/button--general.png",
+      url: "dist/demo/theme/buttons/button--general.png",
       path: "/Demo Theme/Buttons/Button general.png",
       type: "image/png"
     },
       // Buttons
     {
-      url: "demo/theme/nav/mockup.png",
+      url: "dist/demo/theme/nav/mockup.png",
       path: "/Demo Theme/Nav/Mockup.png",
       type: "image/png"
     },
     {
-      url: "demo/theme/nav/background/background.png",
+      url: "dist/demo/theme/nav/background/background.png",
       path: "/Demo Theme/Nav/Background/Background.png",
       type: "image/png"
     }

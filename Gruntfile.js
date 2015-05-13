@@ -82,7 +82,7 @@ module.exports = function (grunt) {
             flatten: true,
             expand: true,
             src: ['<%= pkg.src %>/*', '<%= pkg.src %>/\.htaccess'],
-            dest: '<%= pkg.dist %>/',
+            dest: './',
             filter: 'isFile'
           },
           {

@@ -92,8 +92,9 @@ module.exports = function (grunt) {
             dest: '<%= pkg.dist %>/images/'
           },
           {
-            flatten: true,
-            src: ['<%= pkg.src %>/demo/**/*'],
+            expand: true,
+            cwd: '<%= pkg.src %>/demo/',
+            src: ['**'],
             dest: '<%= pkg.dist %>/demo/'
           },
         ]

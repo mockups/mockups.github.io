@@ -13,7 +13,6 @@ var MockupActions = require('../../actions/MockupActionCreators');
 var Paths = require('../../constants/Paths');
 
 var Logo = require('../Logo/Logo');
-var GithubRibbon = require('./GithubRibbon');
 
 require('./App.scss');
 
@@ -99,7 +98,6 @@ var MockupsApp = React.createClass({
                 <a href="#" onClick={this.logoutFromDropbox}>Logout</a>
               </li>
             </ul>
-            <GithubRibbon />
           </nav>
           : // User not logged
           <nav className="Nav">
@@ -111,7 +109,6 @@ var MockupsApp = React.createClass({
                 <Link to="dropbox-auth">Login</Link>
               </li>
             </ul>
-            <GithubRibbon />
           </nav>
         }
         <main className="Content">

@@ -65,7 +65,7 @@ var MockupsApp = React.createClass({
       this.context.router.replaceWith("dropbox-auth");
     }
 
-    if ( logged && !(files && files.length) ) {
+    if ( logged && !(files && files.length) && !(mockups && mockups.length) ) {
       this.context.router.replaceWith("initial-setup");
     }
   },

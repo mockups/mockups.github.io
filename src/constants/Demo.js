@@ -33,12 +33,12 @@ module.exports = {
     },
       // Icons
     {
-      url: "dist/demo/theme/icons/logo--small.png",
+      url: "dist/demo/theme/icns/logo--small.png",
       path: "/Demo Theme/Icons/Logo small.png",
       type: "image/png"
     },
     {
-      url: "dist/demo/theme/icons/logo--big.png",
+      url: "dist/demo/theme/icns/logo--big.png",
       path: "/Demo Theme/Icons/Logo big.png",
       type: "image/png"
     },

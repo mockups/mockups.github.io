@@ -5,8 +5,6 @@ if (window.location.hostname !== "localhost" && window.location.protocol !== "ht
   window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
 }
 
-import Paths from '../constants/Paths';
-
 // Core
 var React = require('react');
 var Router = require('react-router');
@@ -15,6 +13,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Redirect = Router.Redirect;
 var NotFoundRoute = Router.NotFoundRoute;
 var AppActions = require('../actions/AppActionCreators');
+var Paths = require('../constants/Paths');
 
 // CSS
 require('normalize.css');

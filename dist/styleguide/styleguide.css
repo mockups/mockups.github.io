@@ -1,0 +1,101 @@
+/*!
+// Colors and typography
+//
+// This section describes base colors
+//
+// Styleguide 1.0
+*/
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+.font--general, body, html {
+  font-size: 18px;
+  color: #444;
+  font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+
+body, html {
+  background-color: white; }
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+
+/*!
+// Headings
+//
+// Headings used across application
+//
+// markup:
+// <h2>Heading 2</h2>
+// <p>Mauris feugiat suscipit turpis, ut rhoncus lectus finibus sed. Etiam suscipit consectetur eros vitae venenatis.</p>
+//
+// Styleguide 1.2
+*/
+h1 {
+  font-size: 2rem; }
+
+h2 {
+  font-size: 1.5rem; }
+
+h1, h2 {
+  font-weight: 300;
+  margin-bottom: 0.2em; }
+
+a {
+  transition: color 0.2s ease-in, border-color 0.2s ease-in; }
+  a, a:hover, a:focus, a:active {
+    color: #444;
+    text-decoration: none;
+    border-bottom: 1px solid #c4c4c4; }
+  a:hover {
+    color: #FF0085;
+    border-color: #ff66b6;
+    transition: none; }
+
+p {
+  margin: 0 0 10px; }
+
+.btn {
+  display: inline-block;
+  color: #FF0085;
+  border: 1px solid #FF0085;
+  border-radius: 5px;
+  padding: 0.8em;
+  cursor: pointer;
+  user-select: none;
+  transition: none; }
+  .btn i {
+    margin-right: 0.5em; }
+  .btn:hover, .btn:active {
+    color: white; }
+  .btn:hover {
+    background: #FF0085; }
+  .btn:active {
+    background: #cc006a; }
+  .btn--dropbox {
+    color: #007ee5; }
+    .btn--dropbox, .btn--dropbox:hover, .btn--dropbox:active {
+      border-color: #007ee5; }
+    .btn--dropbox:hover {
+      background: #007ee5;
+      color: white; }
+    .btn--dropbox:active {
+      background: #0062b2; }
+
+.is-centered {
+  text-align: center !important; }

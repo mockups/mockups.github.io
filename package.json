@@ -7,6 +7,7 @@
   "src": "src",
   "test": "test",
   "dist": "dist",
+  "styleguide": "styleguide",
   "mainInput": "main",
   "mainOutput": "main",
   "dependencies": {
@@ -30,9 +31,12 @@
     "grunt-contrib-connect": "~0.8.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-gulp": "^0.1.0",
     "grunt-karma": "~0.8.3",
     "grunt-open": "~0.2.3",
     "grunt-webpack": "~1.0.8",
+    "gulp": "^3.8.11",
+    "gulp-sass": "^2.0.1",
     "jshint-loader": "~0.8.0",
     "jsxhint-loader": "~0.2.0",
     "karma": "~0.12.21",
@@ -46,10 +50,11 @@
     "node-sass": "^2.1.1",
     "react-hot-loader": "^1.0.7",
     "sass-loader": "^0.4.2",
+    "sc5-styleguide": "^0.3.15",
     "style-loader": "~0.8.0",
     "underscore": "^1.8.3",
     "url-loader": "~0.5.5",
     "webpack": "~1.4.3",
-    "webpack-dev-server": "~1.6.5"
+    "webpack-dev-server": "~1.8.2"
   }
 }

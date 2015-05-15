@@ -23,21 +23,21 @@
 	&:active {
 		background: darken($color__secondary, 10%);
 	}
-}
 
-.btn--dropbox {
-	color: $color__dropbox;
+	&--dropbox {
+		color: $color__dropbox;
 
-	&, &:hover, &:active {
-		border-color: $color__dropbox;
-	}
+		&, &:hover, &:active {
+			border-color: $color__dropbox;
+		}
 
-	&:hover {
-		background: $color__dropbox;
-		color: $color__background;
-	}
+		&:hover {
+			background: $color__dropbox;
+			color: $color__background;
+		}
 
-	&:active {
-		background: darken($color__dropbox, 10%);
+		&:active {
+			background: darken($color__dropbox, 10%);
+		}
 	}
 }

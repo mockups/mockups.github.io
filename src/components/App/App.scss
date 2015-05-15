@@ -32,12 +32,3 @@
 .Content {
   padding: 1em 2em;
 }
-
-.GithubRibbon {
-  &, &:hover, &:active {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    border: 0;
-  }
-}

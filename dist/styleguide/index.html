@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sgApp">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="assets/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    var _styleguideConfig = {"title":"UI Kit Mockups Styleguide","disableEncapsulation":false,"disableHtml5Mode":true};
+    (function() {
+      'use strict';
+      var userStyleFiles = [
+          '/dist/styleguide/styleguide.css',
+          '/dist/styleguide/styleguide_pseudo_styles.css',
+          '/dist/styleguide/css/styleguide_helper_elements.css'
+        ],
+        head = document.querySelector('head');
+
+      function addCssLink(href, options) {
+        var link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('type', 'text/css');
+        link.setAttribute('href', href);
+        if (options && options.noReload) {
+          link.setAttribute('data-noreload', true);
+        }
+        head.appendChild(link);
+      }
+
+      // Use Shadow DOM but fallback to global styles if shadow DOM is not supported
+      if (typeof head.createShadowRoot !== 'function' || _styleguideConfig.disableEncapsulation) {
+        userStyleFiles.forEach(addCssLink);
+      }
+
+      addCssLink('/dist/styleguide/styleguide_at_rules.css');
+      addCssLink('/dist/styleguide/css/app.css', {noReload: true});
+    }());
+  </script>
+  <script type="text/ng-template" id="userStyles.html">
+    <style>
+      @import url('/dist/styleguide/styleguide.css');
+      @import url('/dist/styleguide/styleguide_pseudo_styles.css');
+      @import url('/dist/styleguide/css/styleguide_helper_elements.css');
+    </style>
+  </script>
+  <title ng-bind="$root.pageTitle">UI Kit Mockups Styleguide</title>
+  
+  <base href="/dist/styleguide/" />
+</head>
+<body class="sg">
+  <div class="sg view-index" ui-view></div>
+  <script src="/dist/styleguide/js/vendor.js"></script>
+  <script src="/dist/styleguide/js/app.js"></script>
+</body>
+</html>

@@ -1,11 +1,16 @@
 'use strict';
 
+var path = require('path');
+
 var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
 
 var webpackDistConfig = require('./webpack.dist.config.js'),
-    webpackDevConfig = require('./webpack.config.js');
+    webpackDevConfig = require('./webpack.config.js'),
+    gulp = require('gulp'),
+    sass = require('gulp-sass'),
+    styleguide = require('sc5-styleguide');
 
 module.exports = function (grunt) {
   // Let *load-grunt-tasks* require everything
@@ -13,6 +18,7 @@ module.exports = function (grunt) {
 
   // Read configuration from package.json
   var pkgConfig = grunt.file.readJSON('package.json');
+  var styleguidePath = path.join(pkgConfig.dist, pkgConfig.styleguide);
 
   grunt.initConfig({
     pkg: pkgConfig,
@@ -29,9 +35,9 @@ module.exports = function (grunt) {
         hot: true,
         port: 8000,
         webpack: webpackDevConfig,
-        publicPath: 'http://localhost:8000/assets/',
-        contentBase: './<%= pkg.src %>/',
-        historyApiFallback: true
+        publicPath: 'http://localhost:8000/dist/assets/',
+        contentBase: './',
+        historyApiFallback: false
       },
 
       start: {
@@ -49,7 +55,7 @@ module.exports = function (grunt) {
           keepalive: true,
           middleware: function (connect) {
             return [
-              mountFolder(connect, pkgConfig.dist)
+              mountFolder(connect, pkgConfig.dist),
             ];
           }
         }
@@ -110,6 +116,27 @@ module.exports = function (grunt) {
           ]
         }]
       }
+    },
+
+    gulp: {
+      'styleguide-generate': function() {
+        return gulp.src(['src/styles/styleguide.scss'])
+          .pipe(sass().on('error', sass.logError))
+          .pipe(styleguide.generate({
+              title: 'UI Kit Mockups Styleguide',
+              server: false,
+              rootPath: styleguidePath,
+              appRoot: '/' + styleguidePath,
+              overviewPath: 'README.md',
+              commonClass: 'font--general'
+            }))
+          .pipe(gulp.dest(styleguidePath));
+      },
+      'styleguide-applystyles': function() {
+        gulp.src('src/styles/styleguide.scss')
+          .pipe(styleguide.applyStyles())
+          .pipe(gulp.dest(styleguidePath));
+      }
     }
   });
 
@@ -126,7 +153,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['karma']);
 
-  grunt.registerTask('build', ['clean', 'copy', 'webpack']);
+  grunt.registerTask('styleguide', ['gulp:styleguide-generate', 'gulp:styleguide-applystyles']);
+
+  grunt.registerTask('build', ['clean', 'copy', 'webpack', 'styleguide']);
 
   grunt.registerTask('default', []);
 };

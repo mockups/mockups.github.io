@@ -95,9 +95,9 @@ var MockupItem = React.createClass({
           <input className="MockupItem__name MockupItem__edit" ref={ setFocus } type="text" defaultValue={this.state.name} onChange={this.handleChange}></input>
           :
           <div>
-            <div className="MockupItem__name">
+            <h2 className="MockupItem__name">
               <Link to="mockup-edit" params={{mockupId: this.props.id}}>{this.state.name}</Link> 
-            </div>
+            </h2>
 
             <div className="MockupItem__actions">
               (

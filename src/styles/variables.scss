@@ -1,3 +1,11 @@
+/*!
+// Colors and typography
+//
+// This section describes base colors
+//
+// Styleguide 1.0
+*/
+
 $color__root: #444;
 $color__secondary: #FF0085;
 $color__background: white;
@@ -5,12 +13,29 @@ $color__background_checker: #eee;
 $color__border: gray;
 $color__shade: rgba(150,150,150,1);
 $color__dropbox: #007ee5;
+/*!
+// Main colors
+//
+// #{$color__root} - Primary color of font
+// #{$color__secondary} - Secondary color of font (like links or accented text)
+// #{$color__background} - Page background color
+// #{$color__background_checker} - Secondary background color used to emulate checker surface
+// #{$color__border} - Main color for borders of elements
+// #{$color__shade} - Main color of shades
+// #{$color__dropbox} - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
 
 $border__select: 2px dashed $color__secondary;
 
 $border-radius: 5px;
 
-$font_size__header: 1.5rem;
+$font_size__header1: 2rem;
+$font_size__header2: 1.5rem;
 
 $restrict__file_list: 500px;
 

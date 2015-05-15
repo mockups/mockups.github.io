@@ -1,11 +1,15 @@
 @import "variables";
 
-body, html {
+.font--general {
   font-size: 18px;
   color: $color__root;
-  background-color: $color__background;
   font-family: Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+body, html {
+  background-color: $color__background;
+  @extend .font--general;
 }
 
 ul, ol {
@@ -14,8 +18,28 @@ ul, ol {
   list-style-type: none;
 }
 
+/*!
+// Headings
+//
+// Headings used across application
+//
+// markup:
+// <h2>Heading 2</h2>
+// <p>Mauris feugiat suscipit turpis, ut rhoncus lectus finibus sed. Etiam suscipit consectetur eros vitae venenatis.</p>
+//
+// Styleguide 1.2
+*/
+h1 {
+  font-size: $font_size__header1;
+}
+
 h2 {
-  font-size: $font_size__header;
+  font-size: $font_size__header2;
+}
+
+h1, h2 {
+  font-weight: 300;
+  margin-bottom: 0.2em;
 }
 
 a {
@@ -33,6 +57,10 @@ a {
     border-color: lighten($color__secondary, 20%);
     transition: none;
   }
+}
+
+p {
+  margin: 0 0 10px;
 }
 
 @import "buttons";

@@ -92,6 +92,12 @@ var MockupsApp = React.createClass({
             </h2>
             <ul className="Nav__Item">
               <li className="Nav__Item">
+                <a href={Paths.SLIDES}>Slides</a>
+              </li>
+              <li className="Nav__Item">
+                <a href={Paths.STYLEGUIDE}>Styleguide</a>
+              </li>
+              <li className="Nav__Item">
                 <Link to="mockup-list">List of mockups</Link>
               </li>
               <li className="Nav__Item">
@@ -106,7 +112,10 @@ var MockupsApp = React.createClass({
             </div>
             <ul>
               <li className="Nav__Item">
-                <Link to="dropbox-auth">Login</Link>
+                <a href={Paths.SLIDES}>Slides</a>
+              </li>
+              <li className="Nav__Item">
+                <a href={Paths.STYLEGUIDE}>Styleguide</a>
               </li>
             </ul>
           </nav>

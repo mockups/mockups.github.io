@@ -1,9 +1,15 @@
-.DropboxLogin {
+.Hero {
+  display: block;
+  max-width: 22em;
+  margin: 4em auto;
   text-align: center;
-  margin-top: 5rem;
 }
 
-.Hero {
-	margin: 0 auto;
-	max-width: 22em;
+.Infoblock {
+  max-width: 45em;
+  margin: 2em auto;
+
+  &__Header {
+    margin: 0;
+  }
 }

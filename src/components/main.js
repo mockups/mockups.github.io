@@ -21,7 +21,7 @@ require('../styles/common.scss');
 
 // Views
 var MockupsApp = require('./App/App');
-var DropboxLogin = require('./DropboxLogin/DropboxLogin');
+var WelcomePage = require('./WelcomePage/WelcomePage');
 var OauthReciever = require('./OauthReciever/OauthReciever');
 var InitialSetup = require('./InitialSetup/InitialSetup');
 var MockupList = require('./MockupList/MockupList');
@@ -29,13 +29,13 @@ var MockupEdit = require('./MockupEdit/MockupEdit');
 
 var Routes = (
   <Route handler={MockupsApp}>
-    <Route name="dropbox-auth" path={Paths.LOGIN} handler={DropboxLogin} />
+    <Route name="dropbox-auth" path={Paths.LOGIN} handler={WelcomePage} />
     <Route name="oauth-reciever" path={Paths.OAUTH_RECIEVER} handler={OauthReciever} />
     <Route name="initial-setup" path={Paths.INITIAL_SETUP} handler={InitialSetup}  />
     <Route name="mockup-list" path={Paths.MOCKUP_LIST} handler={MockupList} />
     <Route name="mockup-edit" path={Paths.MOCKUP_LIST + "/:mockupId"} handler={MockupEdit} />
     <Route path="/:params" handler={OauthReciever} />
-    <NotFoundRoute handler={DropboxLogin} />
+    <NotFoundRoute handler={WelcomePage} />
   </Route>
 );
 

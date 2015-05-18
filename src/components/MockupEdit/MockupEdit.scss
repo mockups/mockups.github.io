@@ -1,9 +1,28 @@
+/*! styleguide:ignore:start */
 @import '../../styles/variables';
+/*! styleguide:ignore:end */
 
 .MockupEdit {
   position: relative;
 }
 
+/*!
+// Panel
+//
+// Panel that may hold control elements
+// 
+// markup:
+//   <div class="MockupPanel" style="position: absolute;">
+//     <p>Panel content</p>
+//   </div>
+//
+// sg-wrapper:
+// <div style="min-height: 100px; position: relative;">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 3.4
+*/
 .MockupPanel {
   position: fixed;
   left: 0;

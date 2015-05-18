@@ -1,5 +1,63 @@
+/*! styleguide:ignore:start */
 @import '../../styles/variables';
+/*! styleguide:ignore:end */
 
+/*!
+// File list
+//
+// Displays file structure
+//
+// markup:
+//    <div class="FileList">
+//      <h2 class="FileList__Header">Available files</h2>
+//      <ul class="FileList__Wrapper">
+//        <li class="FileList__Node">
+//          <span class="FileList__Label">
+//            <span class="fa fa-folder-open-o FileList__Preview"></span>
+//            Demo Site
+//          </span>
+//          <ul class="FileList__Level">
+//            <li class="FileList__Node">
+//              <span class="FileList__Label">
+//                <span class="fa fa-folder-o FileList__Preview"></span>
+//                Auth
+//              </span>
+//            </li>
+//          </ul>
+//        </li>
+//        <li class="FileList__Node">
+//          <span class="FileList__Label">
+//            <span class="fa fa-folder-open-o FileList__Preview"></span>
+//            Demo Theme
+//          </span>
+//          <ul class="FileList__Level">
+//            <li class="FileList__Node">
+//              <span class="FileList__Label">
+//                <span class="fa fa-folder-o FileList__Preview"></span>
+//                Buttons
+//              </span>
+//            </li>
+//            <li class="FileList__Node">
+//              <span class="FileList__Label">
+//                <span class="fa fa-folder-open-o FileList__Preview"></span>
+//                Icons
+//              </span>
+//              <ul class="FileList__Level">
+//                <li class="FileList__Node">
+//                  <span class="FileList__Label">Logo big.png</span>
+//                </li>
+//                <li class="FileList__Node">
+//                  <span class="FileList__Label">Logo small.png</span>
+//                </li>
+//              </ul>
+//            </li>
+//          </ul>
+//        </li>
+//      </ul>
+//    </div>
+//
+// Styleguide 3.5
+*/
 .FileList {
   &__Wrapper {
     max-height: $restrict__file_list;

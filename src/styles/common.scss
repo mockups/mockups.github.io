@@ -21,11 +21,13 @@ ul, ol {
 /*!
 // Headings
 //
-// Headings used across application
+// Headings used across the application
 //
 // markup:
+// <h1>Heading 1</h1>
+// <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 // <h2>Heading 2</h2>
-// <p>Mauris feugiat suscipit turpis, ut rhoncus lectus finibus sed. Etiam suscipit consectetur eros vitae venenatis.</p>
+// <p>Pellentesque massa ipsum, tincidunt vel convallis in, suscipit et risus.</p>
 //
 // Styleguide 1.2
 */
@@ -42,6 +44,17 @@ h1, h2 {
   margin-bottom: 0.2em;
 }
 
+
+/*!
+// Links
+//
+// Links used across the application
+//
+// markup:
+// <a href="#">Some link</a>
+//
+// Styleguide 2.1
+*/
 a {
   transition: color 0.2s ease-in,
         border-color 0.2s ease-in;

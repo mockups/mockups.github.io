@@ -14,7 +14,7 @@ Run a development server to view project on your localhost:
 ```sh
   grunt serve
 ```
-To rebuild only styleguide, run following:
+To build the styleguide only, run following:
 ```sh
   grunt styleguide
 ```

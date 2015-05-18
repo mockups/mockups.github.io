@@ -1,3 +1,16 @@
+/*!
+// Buttons
+//
+// Button styles used in the styleguide
+//
+// .btn - Default button
+// .btn.btn--dropbox - Button with Dropbox color
+//
+// markup:
+// <a href="#" class="{$modifiers}">Button text</button>
+//
+// Styleguide 2.2
+*/
 .btn {
 	display: inline-block;
 	color: $color__secondary;

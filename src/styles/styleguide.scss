@@ -1,3 +1,43 @@
 // This file is used to generate styleguide based 
 // on stylesheets that are listed below
+
+/*!
+// Colors and typography
+//
+// Base colors and typography
+//
+// Styleguide 1.0
+*/
+
+/*!
+// Links and buttons
+//
+// Links and buttons that leads to other pages or allow user to execute actions
+//
+// Styleguide 2.0
+*/
+
+/*!
+// Structure
+//
+// Application layout and blocks
+//
+// Styleguide 3.0
+*/
+
+/*!
+// Utilities
+//
+// Utilities classes that provide additional styling
+//
+// Styleguide 4.0
+*/
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 @import "common";
+@import "../components/App/App.scss";
+@import "../components/Loading/Loading.scss";
+@import "../components/MockupEdit/MockupEdit.scss";
+@import "../components/FileList/FileList.scss";
+@import "../components/Logo/Logo.scss";
+@import "../components/MockupObjects/MockupItem.scss";

@@ -1,3 +1,15 @@
+/*!
+// Horizontal alignment 
+//
+// horizontal alignment of the content inside block element
+//
+// .is-centered - Center
+//
+// markup:
+// <p class="{$modifiers}">Aligned text</p>
+//
+// Styleguide 4.1
+*/
 .is-centered {
   text-align: center !important;
 }

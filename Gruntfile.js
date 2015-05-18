@@ -10,6 +10,7 @@ var webpackDistConfig = require('./webpack.dist.config.js'),
     webpackDevConfig = require('./webpack.config.js'),
     gulp = require('gulp'),
     sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
     styleguide = require('sc5-styleguide');
 
 module.exports = function (grunt) {
@@ -122,6 +123,9 @@ module.exports = function (grunt) {
       'styleguide-generate': function() {
         return gulp.src(['src/styles/styleguide.scss'])
           .pipe(sass().on('error', sass.logError))
+          .pipe(autoprefixer({
+            browsers: ['last 2 versions']
+          }))
           .pipe(styleguide.generate({
               title: 'UI Kit Mockups Styleguide',
               server: false,

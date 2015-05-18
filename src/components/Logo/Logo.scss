@@ -1,5 +1,30 @@
+/*! styleguide:ignore:start */
 @import '../../styles/variables';
+/*! styleguide:ignore:end */
 
+/*!
+// Logo
+//
+// Logotypes of the site
+//
+// .Logo.Logo--small - small logotype
+// .Logo.Logo--big - big logotype
+// 
+// markup:
+//   <div class="{$modifiers}">
+//     <a href="/#/">
+//       <i class="fa fa-puzzle-piece Logo__Figure"></i>
+//       <div class="Logo__Label">UI Kit Mockups</div>
+//     </a>
+//   </div>
+//
+// sg-wrapper:
+// <div class="is-centered">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 3.3
+*/
 .Logo {
   &__Figure {
     transform: rotate(45deg);

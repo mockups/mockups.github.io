@@ -1,5 +1,27 @@
+/*! styleguide:ignore:start */
 @import '../../styles/variables';
+/*! styleguide:ignore:end */
 
+/*!
+// Mockup object
+//
+// An element that might be part of mockup
+//
+// .MockupObject - common object
+// .MockupObject.MockupObject--selected - selected object
+// 
+// markup:
+//   <div class="{$modifiers}">
+//     Object content
+//   </div>
+//
+// sg-wrapper:
+// <div style="min-height: 20px;">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 3.6
+*/
 .MockupObject {
   position: absolute;
 

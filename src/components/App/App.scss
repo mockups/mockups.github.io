@@ -1,5 +1,26 @@
+/*! styleguide:ignore:start */
 @import '../../styles/variables';
+/*! styleguide:ignore:end */
 
+/*!
+// Navigation
+//
+// Main navigation menu
+//
+// markup:
+// <nav class="Nav">
+//   <div class="Nav__Item Nav__Item--prior">
+//    This nav item occupies as much space as possible
+//   </div>
+//   <ul class="Nav__Item">
+//     <li class="Nav__Item">
+//       <a href="#">Some list item</a>
+//     </li>
+//   </ul>
+//  </nav>
+//
+// Styleguide 3.1
+*/
 .Nav {
   position: relative;
   display: flex;

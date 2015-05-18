@@ -1,6 +1,19 @@
 // Credits: http://projects.lukehaas.me/css-loaders/
-@import '../../styles/variables';
 
+/*! styleguide:ignore:start */
+@import '../../styles/variables';
+/*! styleguide:ignore:end */
+
+/*!
+// Loading
+//
+// Loading indicator
+//
+// markup:
+//   <div class="Loading"></div>
+//
+// Styleguide 3.2
+*/
 .Loading {
   margin: 4em auto;
   font-size: 0.5rem;

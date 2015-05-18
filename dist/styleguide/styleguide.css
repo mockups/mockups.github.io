@@ -1,10 +1,32 @@
 /*!
 // Colors and typography
 //
-// This section describes base colors
+// Base colors and typography
 //
 // Styleguide 1.0
 */
+/*!
+// Links and buttons
+//
+// Links and buttons that leads to other pages or allow user to execute actions
+//
+// Styleguide 2.0
+*/
+/*!
+// Structure
+//
+// Application layout and blocks
+//
+// Styleguide 3.0
+*/
+/*!
+// Utilities
+//
+// Utilities classes that provide additional styling
+//
+// Styleguide 4.0
+*/
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 /*!
 // Main colors
 //
@@ -38,11 +60,13 @@ ul, ol {
 /*!
 // Headings
 //
-// Headings used across application
+// Headings used across the application
 //
 // markup:
+// <h1>Heading 1</h1>
+// <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 // <h2>Heading 2</h2>
-// <p>Mauris feugiat suscipit turpis, ut rhoncus lectus finibus sed. Etiam suscipit consectetur eros vitae venenatis.</p>
+// <p>Pellentesque massa ipsum, tincidunt vel convallis in, suscipit et risus.</p>
 //
 // Styleguide 1.2
 */
@@ -56,6 +80,16 @@ h1, h2 {
   font-weight: 300;
   margin-bottom: 0.2em; }
 
+/*!
+// Links
+//
+// Links used across the application
+//
+// markup:
+// <a href="#">Some link</a>
+//
+// Styleguide 2.1
+*/
 a {
   transition: color 0.2s ease-in, border-color 0.2s ease-in; }
   a, a:hover, a:focus, a:active {
@@ -70,6 +104,19 @@ a {
 p {
   margin: 0 0 10px; }
 
+/*!
+// Buttons
+//
+// Button styles used in the styleguide
+//
+// .btn - Default button
+// .btn.btn--dropbox - Button with Dropbox color
+//
+// markup:
+// <a href="#" class="{$modifiers}">Button text</button>
+//
+// Styleguide 2.2
+*/
 .btn {
   display: inline-block;
   color: #FF0085;
@@ -77,7 +124,10 @@ p {
   border-radius: 5px;
   padding: 0.8em;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   transition: none; }
   .btn i {
     margin-right: 0.5em; }
@@ -97,5 +147,453 @@ p {
     .btn--dropbox:active {
       background: #0062b2; }
 
+/*!
+// Horizontal alignment 
+//
+// horizontal alignment of the content inside block element
+//
+// .is-centered - Center
+//
+// markup:
+// <p class="{$modifiers}">Aligned text</p>
+//
+// Styleguide 4.1
+*/
 .is-centered {
   text-align: center !important; }
+
+/*! styleguide:ignore:start */
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+/*! styleguide:ignore:end */
+/*!
+// Navigation
+//
+// Main navigation menu
+//
+// markup:
+// <nav class="Nav">
+//   <div class="Nav__Item Nav__Item--prior">
+//    This nav item occupies as much space as possible
+//   </div>
+//   <ul class="Nav__Item">
+//     <li class="Nav__Item">
+//       <a href="#">Some list item</a>
+//     </li>
+//   </ul>
+//  </nav>
+//
+// Styleguide 3.1
+*/
+.Nav {
+  position: relative;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0px 3px 5px 0px #969696; }
+  .Nav__Item {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-flex-grow: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0; }
+    .Nav__Item--prior {
+      -webkit-flex-grow: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1; }
+  .Nav__Item + .Nav__Item {
+    margin-left: 1rem; }
+  .Nav__Mockup_Name {
+    margin: 0; }
+
+.Content {
+  padding: 1em 2em; }
+
+/*! styleguide:ignore:start */
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+/*! styleguide:ignore:end */
+/*!
+// Loading
+//
+// Loading indicator
+//
+// markup:
+//   <div class="Loading"></div>
+//
+// Styleguide 3.2
+*/
+.Loading {
+  margin: 4em auto;
+  font-size: 0.5rem;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: loader 1.1s infinite ease;
+          animation: loader 1.1s infinite ease;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0); }
+
+@-webkit-keyframes loader {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #ffffff, 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.5), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.7); }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.7), 1.8em -1.8em 0 0em #ffffff, 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.5); }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.5), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.7), 2.5em 0em 0 0em #ffffff, 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.5), 2.5em 0em 0 0em rgba(255, 0, 133, 0.7), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.5), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.7), 0em 2.5em 0 0em #ffffff, -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.5), 0em 2.5em 0 0em rgba(255, 0, 133, 0.7), -1.8em 1.8em 0 0em #ffffff, -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.5), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.7), -2.6em 0em 0 0em #ffffff, -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.5), -2.6em 0em 0 0em rgba(255, 0, 133, 0.7), -1.8em -1.8em 0 0em #ffffff; } }
+
+@keyframes loader {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #ffffff, 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.5), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.7); }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.7), 1.8em -1.8em 0 0em #ffffff, 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.5); }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.5), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.7), 2.5em 0em 0 0em #ffffff, 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.5), 2.5em 0em 0 0em rgba(255, 0, 133, 0.7), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.5), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.7), 0em 2.5em 0 0em #ffffff, -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.2), -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.5), 0em 2.5em 0 0em rgba(255, 0, 133, 0.7), -1.8em 1.8em 0 0em #ffffff, -2.6em 0em 0 0em rgba(255, 0, 133, 0.2), -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.5), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.7), -2.6em 0em 0 0em #ffffff, -1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2); }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(255, 0, 133, 0.2), 1.8em -1.8em 0 0em rgba(255, 0, 133, 0.2), 2.5em 0em 0 0em rgba(255, 0, 133, 0.2), 1.75em 1.75em 0 0em rgba(255, 0, 133, 0.2), 0em 2.5em 0 0em rgba(255, 0, 133, 0.2), -1.8em 1.8em 0 0em rgba(255, 0, 133, 0.5), -2.6em 0em 0 0em rgba(255, 0, 133, 0.7), -1.8em -1.8em 0 0em #ffffff; } }
+
+/*! styleguide:ignore:start */
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+/*! styleguide:ignore:end */
+.MockupEdit {
+  position: relative; }
+
+/*!
+// Panel
+//
+// Panel that may hold control elements
+// 
+// markup:
+//   <div class="MockupPanel" style="position: absolute;">
+//     <p>Panel content</p>
+//   </div>
+//
+// sg-wrapper:
+// <div style="min-height: 100px; position: relative;">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 3.4
+*/
+.MockupPanel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  max-height: 70%;
+  overflow: hidden;
+  overflow-y: auto;
+  cursor: move;
+  background: white;
+  box-shadow: 0px 3px 5px 0px #969696;
+  border: 1px solid gray;
+  padding: 1em; }
+
+.MockupContainer {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  background-color: white;
+  background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee), linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px; }
+  .MockupContainer--selected {
+    outline: 2px dashed #FF0085; }
+
+/*! styleguide:ignore:start */
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+/*! styleguide:ignore:end */
+/*!
+// File list
+//
+// Displays file structure
+//
+// markup:
+//    <div class="FileList">
+//      <h2 class="FileList__Header">Available files</h2>
+//      <ul class="FileList__Wrapper">
+//        <li class="FileList__Node">
+//          <span class="FileList__Label">
+//            <span class="fa fa-folder-open-o FileList__Preview"></span>
+//            Demo Site
+//          </span>
+//          <ul class="FileList__Level">
+//            <li class="FileList__Node">
+//              <span class="FileList__Label">
+//                <span class="fa fa-folder-o FileList__Preview"></span>
+//                Auth
+//              </span>
+//            </li>
+//          </ul>
+//        </li>
+//        <li class="FileList__Node">
+//          <span class="FileList__Label">
+//            <span class="fa fa-folder-open-o FileList__Preview"></span>
+//            Demo Theme
+//          </span>
+//          <ul class="FileList__Level">
+//            <li class="FileList__Node">
+//              <span class="FileList__Label">
+//                <span class="fa fa-folder-o FileList__Preview"></span>
+//                Buttons
+//              </span>
+//            </li>
+//            <li class="FileList__Node">
+//              <span class="FileList__Label">
+//                <span class="fa fa-folder-open-o FileList__Preview"></span>
+//                Icons
+//              </span>
+//              <ul class="FileList__Level">
+//                <li class="FileList__Node">
+//                  <span class="FileList__Label">Logo big.png</span>
+//                </li>
+//                <li class="FileList__Node">
+//                  <span class="FileList__Label">Logo small.png</span>
+//                </li>
+//              </ul>
+//            </li>
+//          </ul>
+//        </li>
+//      </ul>
+//    </div>
+//
+// Styleguide 3.5
+*/
+.FileList__Wrapper {
+  max-height: 500px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 1em; }
+
+.FileList__Level {
+  margin-left: 1em; }
+
+.FileList__Preview {
+  margin-right: 0.3em; }
+
+.FileList__Node {
+  cursor: pointer;
+  margin: 0.5em 0; }
+
+.FileList__Header {
+  margin: 0; }
+
+.FileList__Label {
+  white-space: nowrap; }
+  .FileList__Label:hover {
+    color: #FF0085; }
+
+/*! styleguide:ignore:start */
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+/*! styleguide:ignore:end */
+/*!
+// Logo
+//
+// Logotypes of the site
+//
+// .Logo.Logo--small - small logotype
+// .Logo.Logo--big - big logotype
+// 
+// markup:
+//   <div class="{$modifiers}">
+//     <a href="/#/">
+//       <i class="fa fa-puzzle-piece Logo__Figure"></i>
+//       <div class="Logo__Label">UI Kit Mockups</div>
+//     </a>
+//   </div>
+//
+// sg-wrapper:
+// <div class="is-centered">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 3.3
+*/
+.Logo__Figure {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
+
+.Logo a, .Logo a:active, .Logo a:focus, .Logo a:hover {
+  border: none; }
+
+.Logo.Logo--small {
+  font-size: 1.5rem; }
+  .Logo.Logo--small .Logo__Label {
+    margin-left: 0.5em;
+    display: inline; }
+  .Logo.Logo--small .Logo__Figure {
+    color: white; }
+    .Logo.Logo--small .Logo__Figure:after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -4px;
+      width: 1.1em;
+      height: 1.1em;
+      background-color: #FF0085;
+      border-radius: 0.5rem;
+      z-index: -1; }
+
+.Logo.Logo--big .Logo__Label,
+.Logo.Logo--big .Logo__Figure {
+  color: #FF0085; }
+
+.Logo.Logo--big .Logo__Label {
+  font-size: 2em;
+  margin: 0.2em 0.5em; }
+
+.Logo.Logo--big .Logo__Figure {
+  font-size: 4em; }
+
+/*! styleguide:ignore:start */
+/*!
+// Main colors
+//
+// #444 - Primary color of font
+// #FF0085 - Secondary color of font (like links or accented text)
+// white - Page background color
+// #eee - Secondary background color used to emulate checker surface
+// gray - Main color for borders of elements
+// #969696 - Main color of shades
+// #007ee5 - Dropbox firm color
+//
+// markup:
+// <div style="background: {$modifiers};" class="styleguide-color">{$modifiers}</div>
+//
+// Styleguide 1.1
+*/
+/*! styleguide:ignore:end */
+/*!
+// Mockup object
+//
+// An element that might be part of mockup
+//
+// .MockupObject - common object
+// .MockupObject.MockupObject--selected - selected object
+// 
+// markup:
+//   <div class="{$modifiers}">
+//     Object content
+//   </div>
+//
+// sg-wrapper:
+// <div style="min-height: 20px;">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 3.6
+*/
+.MockupObject {
+  position: absolute; }
+  .MockupObject:hover {
+    outline: 1px dashed gray;
+    cursor: pointer; }
+  .MockupObject--selected, .MockupObject--selected:hover {
+    outline: 2px dashed #FF0085;
+    border-color: transparent; }

@@ -54,12 +54,12 @@ var WelcomePage = React.createClass({
                 <p>
                   UI Kit is an abstract conception to organize your user interface in modular way. 
                   It strongly relies on documentating design components.
-                  This site provides an example on how you may structure your files and create a living styleguide for those.
+                  This site provides an example on how you may structure your files and create <a href="/dist/styleguide/#/section/1">a living styleguide</a> for those.
                 </p>
                 <p>
                   Check out the following slides for details:
                 </p>
-                <iframe src="https://www.slideshare.net/slideshow/embed_code/key/w9Do8gDZrk7Dk0" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+                <iframe src="https://www.slideshare.net/slideshow/embed_code/key/w9Do8gDZrk7Dk0" width="476" height="400" frameBorder="0" marginWidth="0" marginHeight="0" scrolling="no"></iframe>
               </section>
               <section className="Infoblock">
                 <h1>Source code</h1>
